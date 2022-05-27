@@ -28,6 +28,11 @@ extension DateTimeToString on DateTime {
     final _stringToDateTime = DateFormat('dd/MM/yyyy');
     return _stringToDateTime.format(this).toString();
   }
+
+  String formatDateAndTime() {
+    String formattedDate = DateFormat('yyyy-MM-dd hh:mm').format(this);
+    return formattedDate;
+  }
 }
 
 extension StringToDateTime on String {
@@ -62,12 +67,9 @@ extension StringToDateTime on String {
   }
 }
 
-
-
 extension LongToDateString on int {
   String formatLongToDateTimeString() {
     var dt = DateTime.fromMillisecondsSinceEpoch(this * 1000);
     return DateFormat('dd/MM/yyyy HH:mm').format(dt); // 31/12/2000, 22:00
   }
 }
-

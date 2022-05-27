@@ -11,11 +11,13 @@ class CacheException implements Exception {
   CacheException({this.errorMessage});
 }
 
-class InputException implements Exception {
+class IOException implements Exception {
   String? errorMessage;
-  InputException({this.errorMessage});
+  String? errorCode;
+  IOException({this.errorMessage, this.errorCode});
 }
 
 const socketException = "SOCKET_EXCEPTION";
 const timeoutException = "TIMEOUT_EXCEPTION";
 const unknownException = "UNKNOWN_EXCEPTION";
+const ioException = "ioException";

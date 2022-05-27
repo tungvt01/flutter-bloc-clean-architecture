@@ -1,3 +1,6 @@
 enum PageTag {
-  home,
+  main,
+  allTodo,
+  doingTodo,
+  doneTodo,
 }

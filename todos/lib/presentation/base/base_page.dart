@@ -19,14 +19,11 @@ abstract class BasePage extends StatefulWidget {
   final PageTag tag;
 }
 
-abstract class BasePageState<
-    T extends BaseBloc<BaseEvent, BaseState>,
+abstract class BasePageState<T extends BaseBloc<BaseEvent, BaseState>,
     P extends BasePage> extends State<P> with BasePageMixin {
   late T bloc;
   late BuildContext subContext;
   late ApplicationBloc applicationBloc;
-
-  bool get willListenApplicationEvent => false;
 
   bool get resizeToAvoidBottomInset => false;
 
@@ -54,7 +51,7 @@ abstract class BasePageState<
         final result = await showAlert(
           primaryColor: AppColors.primaryColor,
           context: context,
-          message: AppLocalizations.shared.sessionExpiredMessage,
+          message: AppLocalizations.shared.commonMessageServerMaintenance,
         );
         if (result) {
           navigator.popToRoot(context: context);

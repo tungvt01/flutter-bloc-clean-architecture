@@ -4,6 +4,7 @@ import '../styles/index.dart';
 class SolidButton extends StatelessWidget {
   final Color? backgroundColor;
   final double? height;
+  final double? width;
 
   final TextStyle? titleStyle;
   final String title;
@@ -15,6 +16,7 @@ class SolidButton extends StatelessWidget {
   const SolidButton({
     required this.title,
     this.height = 44,
+    this.width,
     this.backgroundColor,
     this.titleStyle,
     this.onPressed,
@@ -42,6 +44,7 @@ class SolidButton extends StatelessWidget {
       ),
       child: SizedBox(
         height: height,
+        width: width,
         child: Center(
           child: Text(title, style: titleStyle ?? titleMedium),
         ),

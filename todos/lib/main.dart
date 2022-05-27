@@ -1,27 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_local.dart';
+import 'package:todos/presentation/page/main/index.dart';
+import 'package:todos/presentation/utils/index.dart';
 import 'app_injector.dart';
 import 'presentation/app/index.dart';
 import 'presentation/base/index.dart';
 import 'presentation/resources/index.dart';
 
-
 late ApplicationBloc appBloc;
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-    await initializeDateFormatting('vi_VN');
-    AppLocalizations.shared.reloadLanguageBundle(languageCode: 'vi');
-    await initInjector();
-
-    appBloc = ApplicationBloc();
-
-    runApp(
-      BlocProvider<ApplicationBloc>(
-        create: (BuildContext context) => appBloc,
-        child: const MyApp(),
-      ),
-    );
+  await AppLocalizations.shared.reloadLanguageBundle(languageCode: 'en');
+  await initInjector();
+  appBloc = ApplicationBloc();
+  runApp(
+    BlocProvider<ApplicationBloc>(
+      create: (BuildContext context) => appBloc,
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -49,7 +45,9 @@ class MyAppState extends State<MyApp> {
       home: BlocBuilder<ApplicationBloc, BaseState>(
           bloc: appBloc,
           builder: (context, state) {
-           return Container();
+            return const MainPage(
+              pageTag: PageTag.main,
+            );
           }),
     );
   }

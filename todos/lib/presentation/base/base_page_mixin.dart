@@ -123,8 +123,6 @@ mixin BasePageMixin {
         });
   }
 
-  
-
   Widget buildShimmer({int count = 20}) {
     final children = List.generate(count, (index) => const ShimmeItemWidget());
     return ListView(
@@ -148,5 +146,7 @@ mixin BasePageMixin {
     });
   }
 
-
+  showPopup({required BuildContext context, required Widget widget}) async {
+    return AlertManager.showWidgetDialog(context: context, child: widget);
+  }
 }
