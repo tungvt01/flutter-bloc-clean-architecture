@@ -1,4 +1,4 @@
-import 'package:todos/data/local/storage/todo_dao.dart';
+import 'package:todos/data/local/todo_dao.dart';
 import 'package:todos/domain/model/todo_model.dart';
 import 'package:todos/domain/repository/todo_repository.dart';
 

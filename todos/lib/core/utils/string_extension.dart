@@ -1,28 +1,5 @@
 import 'package:intl/intl.dart';
 
-extension StringToBool on String {
-  bool toBoolValue() {
-    if (isNotEmpty) {
-      return toLowerCase() == 'true' || toLowerCase() == '1';
-    }
-    return false;
-  }
-
-  double? toDoubleValue() {
-    if (isNotEmpty) {
-      return double.tryParse(this);
-    }
-    return null;
-  }
-
-  int? toIntValue() {
-    if (isNotEmpty) {
-      return int.tryParse(this);
-    }
-    return null;
-  }
-}
-
 extension DateTimeToString on DateTime {
   String formatToDayMonthYearString() {
     final _stringToDateTime = DateFormat('dd/MM/yyyy');

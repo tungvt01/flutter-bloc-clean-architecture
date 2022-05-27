@@ -1,4 +1,5 @@
 import 'dart:async';
+
 const moneyRegex = r'(?=.*?\d)^\$?(([1-9]\d{0,2})|\d+)?(\.\d{1,3})*?$';
 const cardNumberRegex = r'^[0-9]{15,18}$';
 const cvvRegex = r"^[0-9]{3,4}$";
@@ -28,21 +29,21 @@ const int minLengthPassword = 6;
 const int maxLengthPassword = 6;
 const int maxLengthName = 256;
 
-
 class Validators {
-   validateMoneyTransformer(int currentAmount) {
-     return StreamTransformer<String, bool>.fromHandlers(handleData: (money, sink) {
-    RegExp regex = RegExp(moneyRegex);
-    bool match = regex.hasMatch(money);
-    String m = money;
-    if(money.contains('.')){
-     m =  m.replaceAll('.', '');
-    } else if(money.contains(',')){
-      m = m.replaceAll(',', '');
-    }
-    bool check = int.parse(m) <= currentAmount;
-    sink.add(match && check);
-  });
+  validateMoneyTransformer(int currentAmount) {
+    return StreamTransformer<String, bool>.fromHandlers(
+        handleData: (money, sink) {
+      RegExp regex = RegExp(moneyRegex);
+      bool match = regex.hasMatch(money);
+      String m = money;
+      if (money.contains('.')) {
+        m = m.replaceAll('.', '');
+      } else if (money.contains(',')) {
+        m = m.replaceAll(',', '');
+      }
+      bool check = int.parse(m) <= currentAmount;
+      sink.add(match && check);
+    });
   }
 
   final validatePasswordTransformer =
@@ -59,10 +60,9 @@ class Validators {
   });
 
   final validateBillIdTransformer =
-  StreamTransformer<String, bool>.fromHandlers(
-      handleData: (billId, sink) {
-        sink.add(billId.isNotEmpty);
-      });
+      StreamTransformer<String, bool>.fromHandlers(handleData: (billId, sink) {
+    sink.add(billId.isNotEmpty);
+  });
 
   final validateEmailTransformer =
       StreamTransformer<String, bool>.fromHandlers(handleData: (email, sink) {

@@ -2,7 +2,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get_it/get_it.dart';
 import 'package:todos/core/network/network_status.dart';
 import 'package:todos/data/local/index.dart';
-import 'package:todos/data/local/storage/todo_dao.dart';
+import 'package:todos/data/local/todo_dao.dart';
 import 'package:todos/data/repository/todo_repository_impl.dart';
 import 'package:todos/domain/repository/todo_repository.dart';
 import 'package:todos/domain/usecase/index.dart';
@@ -22,8 +22,6 @@ initInjector() {
       () => NetworkStatusImpl(injector(), injector()));
 
 //Data
-  injector
-      .registerFactory<LocalDataStorage>(() => SharePreferenceStorageImpl());
   injector.registerLazySingleton<TodoDAO>(() => TodoDAOImpl());
 
 // Repository
