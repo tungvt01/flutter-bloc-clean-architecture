@@ -1,5 +1,4 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todos/presentation/styles/index.dart';
 import 'package:todos/presentation/widgets/index.dart';
 import 'package:flutter/material.dart';
@@ -114,7 +113,9 @@ class AlertManager {
               child: AutoSizeText(cancelTitle!,
                   textAlign: TextAlign.center,
                   style: titleMedium.copyWith(
-                      color: AppColors.neutral1,fontSize: 12, fontWeight: FontWeight.w700)),
+                      color: AppColors.neutral1,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700)),
               onPressed: () {
                 return Navigator.of(context).pop(false);
               },
@@ -138,7 +139,9 @@ class AlertManager {
             child: AutoSizeText(okActionTitle ?? "OK",
                 textAlign: TextAlign.center,
                 style: titleMedium.copyWith(
-                    color: Colors.white,fontSize: 12, fontWeight: FontWeight.w700)),
+                    color: Colors.white,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700)),
             onPressed: () {
               return Navigator.of(context).pop(true);
             },
@@ -192,11 +195,7 @@ class AlertManager {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               SizedBox(
-                                height: (image != null ) ? 30 : 0,
-                              ),
-                              Visibility(
-                                visible: image != null,
-                                child: SvgPicture.asset(image ?? ''),
+                                height: (image != null) ? 30 : 0,
                               ),
                               Padding(
                                 padding: const EdgeInsets.symmetric(

@@ -47,7 +47,7 @@ abstract class BasePageState<T extends BaseBloc<BaseEvent, BaseState>,
 
   void stateListenerHandler(BaseState state) async {
     if (state.failure != null) {
-      if ((state.failure!.code ?? 0) == accessTokenExpiredCode) {
+      if ((state.failure!.httpStatusCode ?? 0) == accessTokenExpiredCode) {
         final result = await showAlert(
           primaryColor: AppColors.primaryColor,
           context: context,

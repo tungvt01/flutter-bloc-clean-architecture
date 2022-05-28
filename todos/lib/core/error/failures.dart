@@ -1,26 +1,31 @@
 abstract class Failure {
   String? message;
-  int? code;
-  Failure({this.message, this.code});
+  int? httpStatusCode;
+  String? errorCode;
+  Failure({this.message, this.httpStatusCode, this.errorCode});
 }
 
 class RemoteFailure extends Failure {
   dynamic data;
-  RemoteFailure({String? msg, this.data, int? code})
-      : super(message: msg, code: code);
+  RemoteFailure({String? msg, this.data, int? code, String? errorCode})
+      : super(message: msg, httpStatusCode: code, errorCode: errorCode);
 }
 
-class CacheFailure extends Failure {
-  CacheFailure({String? msg}) : super(message: msg);
+class LocalFailure extends Failure {
+  LocalFailure({String? msg, String? errorCode})
+      : super(message: msg, errorCode: errorCode);
 }
 
 class PlatformFailure extends Failure {
-  PlatformFailure({String? msg}) : super(message: msg);
+  PlatformFailure({String? msg, String? errorCode})
+      : super(message: msg, errorCode: errorCode);
 }
 
 class UnknownFailure extends Failure {
-  UnknownFailure({String? msg, int? code}) : super(message: msg, code: code);
+  UnknownFailure({String? msg, int? code, String? errorCode})
+      : super(message: msg, httpStatusCode: code, errorCode: errorCode);
 }
+
 const internetErrorMessage = 'internetErrorMessage';
 const socketErrorMessage = 'socketErrorMessage';
 const serverErrorMessage = 'server_error_message';

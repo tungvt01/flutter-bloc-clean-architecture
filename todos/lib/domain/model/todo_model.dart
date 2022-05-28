@@ -16,6 +16,7 @@ class TodoModel {
   bool isFinished;
 
   TodoModel({
+    int? id,
     required this.title,
     required this.description,
     required this.createdDate,
