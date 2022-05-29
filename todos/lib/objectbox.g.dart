@@ -112,6 +112,7 @@ ModelDefinition getObjectBoxModel() {
           final rootOffset = buffer.derefObject(0);
 
           final object = TodoModel(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
               title: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 8, ''),
               description: const fb.StringReader(asciiOptimization: true)
@@ -119,8 +120,7 @@ ModelDefinition getObjectBoxModel() {
               createdDate: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0)),
               isFinished: const fb.BoolReader()
-                  .vTableGet(buffer, rootOffset, 12, false))
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+                  .vTableGet(buffer, rootOffset, 12, false));
 
           return object;
         })
