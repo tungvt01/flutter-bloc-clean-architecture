@@ -1,29 +1,32 @@
+import 'package:equatable/equatable.dart';
+
 abstract class Failure {
   String? message;
   int? httpStatusCode;
   String? errorCode;
+
   Failure({this.message, this.httpStatusCode, this.errorCode});
 }
 
 class RemoteFailure extends Failure {
   dynamic data;
-  RemoteFailure({String? msg, this.data, int? code, String? errorCode})
-      : super(message: msg, httpStatusCode: code, errorCode: errorCode);
+
+  RemoteFailure({String? msg, this.data, int? code, super.errorCode}) : super(message: msg, httpStatusCode: code);
 }
 
-class LocalFailure extends Failure {
-  LocalFailure({String? msg, String? errorCode})
-      : super(message: msg, errorCode: errorCode);
+class LocalFailure extends Failure with EquatableMixin {
+  LocalFailure({String? msg, super.errorCode}) : super(message: msg);
+
+  @override
+  List<Object?> get props => [message, errorCode];
 }
 
 class PlatformFailure extends Failure {
-  PlatformFailure({String? msg, String? errorCode})
-      : super(message: msg, errorCode: errorCode);
+  PlatformFailure({String? msg, super.errorCode}) : super(message: msg);
 }
 
 class UnknownFailure extends Failure {
-  UnknownFailure({String? msg, int? code, String? errorCode})
-      : super(message: msg, httpStatusCode: code, errorCode: errorCode);
+  UnknownFailure({String? msg, int? code, super.errorCode}) : super(message: msg, httpStatusCode: code);
 }
 
 const internetErrorMessage = 'internetErrorMessage';

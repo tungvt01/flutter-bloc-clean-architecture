@@ -2,25 +2,27 @@ import 'package:focus_detector/focus_detector.dart';
 import 'package:todos/core/error/failures.dart';
 import 'package:todos/presentation/app/index.dart';
 import 'package:todos/presentation/base/index.dart';
+
 import '../../app_injector.dart';
 import '../navigator/page_navigator.dart';
 import '../utils/index.dart';
 import 'base_page_mixin.dart';
+
 export 'package:flutter_bloc/flutter_bloc.dart';
+export 'package:logger/logger.dart';
 export 'package:todos/presentation/styles/index.dart';
 export 'package:todos/presentation/utils/input_formatter.dart';
-export 'package:logger/logger.dart';
 
 abstract class BasePage extends StatefulWidget {
   const BasePage({
     required this.tag,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
+
   final PageTag tag;
 }
 
-abstract class BasePageState<T extends BaseBloc<BaseEvent, BaseState>,
-    P extends BasePage> extends State<P> with BasePageMixin {
+abstract class BasePageState<T extends BaseBloc<BaseEvent, BaseState>, P extends BasePage> extends State<P> with BasePageMixin {
   late T bloc;
   late BuildContext subContext;
   late ApplicationBloc applicationBloc;
@@ -30,8 +32,7 @@ abstract class BasePageState<T extends BaseBloc<BaseEvent, BaseState>,
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    bloc.onPageDidChangeDependenciesEvent(
-        PageDidChangeDependenciesEvent(context: context));
+    bloc.onPageDidChangeDependenciesEvent(PageDidChangeDependenciesEvent(context: context));
   }
 
   @override
@@ -61,8 +62,7 @@ abstract class BasePageState<T extends BaseBloc<BaseEvent, BaseState>,
       }
       String message = '';
       Logger().d('[Debug]: error ${state.failure?.message}');
-      if (state.failure!.message == internetErrorMessage ||
-          state.failure!.message == socketErrorMessage) {
+      if (state.failure!.message == internetErrorMessage || state.failure!.message == socketErrorMessage) {
         message = AppLocalizations.shared.commonMessageConnectionError;
       } else if (state.failure!.message == serverErrorMessage) {
         message = AppLocalizations.shared.commonMessageServerMaintenance;
@@ -81,20 +81,16 @@ abstract class BasePageState<T extends BaseBloc<BaseEvent, BaseState>,
   Widget build(BuildContext context) {
     return FocusDetector(
       onFocusGained: () {
-        bloc.onPageDidAppearEvent(
-            PageDidAppearEvent(tag: widget.tag, context: context));
+        bloc.onPageDidAppearEvent(PageDidAppearEvent(tag: widget.tag, context: context));
       },
       onFocusLost: () {
-        bloc.onPageDidDisappearEvent(
-            PageDidDisappearEvent(tag: widget.tag, context: context));
+        bloc.onPageDidDisappearEvent(PageDidDisappearEvent(tag: widget.tag, context: context));
       },
       onForegroundLost: () {
-        bloc.onAppEnterBackgroundEvent(
-            AppEnterBackgroundEvent(context: context, tag: widget.tag));
+        bloc.onAppEnterBackgroundEvent(AppEnterBackgroundEvent(context: context, tag: widget.tag));
       },
       onForegroundGained: () {
-        bloc.onAppGainForegroundEvent(
-            AppGainForegroundEvent(context: context, tag: widget.tag));
+        bloc.onAppGainForegroundEvent(AppGainForegroundEvent(context: context, tag: widget.tag));
       },
       child: Scaffold(
         // backgroundColor: Colors.transparent,

@@ -5,30 +5,26 @@ import 'package:todos/data/repository/todo_repository_impl.dart';
 import 'package:todos/domain/repository/todo_repository.dart';
 import 'package:todos/domain/usecase/index.dart';
 import 'package:todos/presentation/page/todo_list/index.dart';
+
 import 'presentation/page/main/index.dart';
 
 GetIt injector = GetIt.asNewInstance();
 
 initInjector() {
 //Data
-  injector.registerLazySingleton<TodoDAO>(() => TodoDAOImpl());
+  injector.registerLazySingleton<TodoDAO>(() => TodoDAOImpl(storeProvider: StoreProvider()));
 
 // Repository
-  injector
-      .registerFactory<TodoRepository>(() => TodoRepositoryImpl(injector()));
+  injector.registerFactory<TodoRepository>(() => TodoRepositoryImpl(injector()));
 
 //Usecase
-  injector.registerFactory<AddNewTotoUseCase>(
-      () => AddNewTotoUseCaseImpl(injector()));
-  injector.registerFactory<GetAllTodoUseCase>(
-      () => GetAllTodoUseCaseImpl(injector()));
-  injector.registerFactory<UpdateTodoUseCase>(
-      () => UpdateTodoUseCaseImpl(injector()));
-  injector.registerFactory<GetTodoListByConditionUseCase>(
-      () => GetTodoListByConditionUseCaseImpl(injector()));
+  injector.registerFactory<AddNewTotoUseCase>(() => AddNewTotoUseCaseImpl(injector()));
+  injector.registerFactory<GetAllTodoUseCase>(() => GetAllTodoUseCaseImpl(injector()));
+  injector.registerFactory<UpdateTodoUseCase>(() => UpdateTodoUseCaseImpl(injector()));
+  injector.registerFactory<GetTodoListByConditionUseCase>(() => GetTodoListByConditionUseCaseImpl(injector()));
+  injector.registerFactory<RemoveTodoUseCase>(() => RemoveTodoUseCaseImpl(injector()));
 
 //Bloc
   injector.registerFactory<MainBloc>(() => MainBloc(injector()));
-  injector.registerFactory<TodoListBloc>(
-      () => TodoListBloc(injector(), injector(), injector()));
+  injector.registerFactory<TodoListBloc>(() => TodoListBloc(injector(), injector(), injector(), injector()));
 }

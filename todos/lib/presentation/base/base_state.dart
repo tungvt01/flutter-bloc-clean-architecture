@@ -7,8 +7,8 @@ enum LoadingStatus {
 }
 
 abstract class BaseState {
-  LoadingStatus loadingStatus = LoadingStatus.none;
-  Failure? failure;
+  final LoadingStatus loadingStatus;
+  final Failure? failure;
 
   BaseState({this.loadingStatus = LoadingStatus.none, this.failure});
 }

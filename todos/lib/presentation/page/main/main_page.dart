@@ -8,8 +8,8 @@ import '../../utils/index.dart';
 import 'index.dart';
 
 class MainPage extends BasePage {
-  const MainPage({required PageTag pageTag, Key? key})
-      : super(tag: pageTag, key: key);
+  const MainPage({required PageTag pageTag, super.key})
+      : super(tag: pageTag);
 
   @override
   State<StatefulWidget> createState() => MainPageState();
@@ -119,14 +119,13 @@ class _BottomNavigationBarState extends State<_BottomNavigationBar> {
 
 class _CreateTodoButton extends StatelessWidget {
   final Function() onPressed;
-  const _CreateTodoButton({required this.onPressed, Key? key})
-      : super(key: key);
+  const _CreateTodoButton({required this.onPressed});
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      child: const Icon(Icons.add),
       backgroundColor: AppColors.primaryColor,
       onPressed: onPressed,
+      child: const Icon(Icons.add),
     );
   }
 }

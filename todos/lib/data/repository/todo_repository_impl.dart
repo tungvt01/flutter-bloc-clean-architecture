@@ -25,4 +25,9 @@ class TodoRepositoryImpl extends TodoRepository {
   Future<void> updateTodo({required TodoModel todo}) {
     return _todoDAO.insertOrUpdate(data: todo);
   }
+
+  @override
+  Future<bool> remove({required int id}) {
+    return _todoDAO.remove(id: id);
+  }
 }

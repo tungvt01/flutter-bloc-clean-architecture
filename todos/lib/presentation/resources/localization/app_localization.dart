@@ -48,7 +48,6 @@ class AppLocalizations {
     try {
       jsonContent = await rootBundle.loadString(path);
     } catch (_) {
-      //use default Vietnamese
       jsonContent =
           await rootBundle.loadString("assets/jsons/localization_en.json");
     }

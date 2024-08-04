@@ -12,8 +12,8 @@ import 'index.dart';
 import 'widget/todo_item_widget.dart';
 
 class TodoListPage extends BasePage {
-  const TodoListPage({required PageTag pageTag, Key? key})
-      : super(tag: pageTag, key: key);
+  const TodoListPage({required PageTag pageTag, super.key})
+      : super(tag: pageTag);
 
   @override
   State<StatefulWidget> createState() => TodoListPageState();
@@ -76,6 +76,9 @@ class TodoListPageState extends BasePageState<TodoListBloc, TodoListPage> {
                               _showUpdateConfirmDialog(todo);
                             },
                             todo: state.todos![index],
+                            onConfirmDismiss: (c, todo) {
+                              _showDeleteConfirmDialog(todo);
+                            },
                           );
                         },
                       ),
@@ -92,6 +95,18 @@ class TodoListPageState extends BasePageState<TodoListBloc, TodoListPage> {
     if (isOk) {
       todo.isFinished = !todo.isFinished;
       bloc.dispatchEvent(OnRequestUpdateTodoEvent(todo: todo));
+    }
+  }
+
+  _showDeleteConfirmDialog(TodoModel todo) async {
+    final isOk = await showAlert(
+      context: context,
+      message: 'Are you sure to delete this note?',
+      okActionTitle: 'Delete',
+      cancelTitle: 'Cancel',
+    );
+    if (isOk) {
+      bloc.dispatchEvent(OnRequestDeleteTodoEvent(todo: todo));
     }
   }
 

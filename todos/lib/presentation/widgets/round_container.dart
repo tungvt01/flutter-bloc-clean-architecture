@@ -27,8 +27,8 @@ class RoundContainer extends StatelessWidget {
     this.width,
     this.borderColor = Colors.transparent,
     this.borderWidth = 1,
-    Key? key
-  }): super(key: key);
+    super.key
+  });
 
   @override
   Widget build(BuildContext context) {

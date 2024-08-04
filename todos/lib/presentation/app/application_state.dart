@@ -1,23 +1,26 @@
+import 'package:equatable/equatable.dart';
 import 'package:todos/core/error/failures.dart';
 import 'package:todos/presentation/base/base_state.dart';
 
-class ApplicationState extends BaseState {
-  AppLaunchTag tag;
+class ApplicationState extends BaseState with EquatableMixin {
+  final AppLaunchTag tag;
 
   ApplicationState({
     required this.tag,
-    Failure? failure,
+    super.failure,
     LoadingStatus? status,
-  }) : super(failure: failure, loadingStatus: status ?? LoadingStatus.none);
+  }) : super(loadingStatus: status ?? LoadingStatus.none);
 
   ApplicationState copyWith({
     AppLaunchTag? tag,
     Failure? failure,
     LoadingStatus? status,
   }) {
-    return ApplicationState(
-        tag: tag ?? this.tag, failure: failure, status: status);
+    return ApplicationState(tag: tag ?? this.tag, failure: failure, status: status);
   }
+
+  @override
+  List<Object?> get props => [tag, failure, loadingStatus];
 }
 
 enum AppLaunchTag { splash, main }

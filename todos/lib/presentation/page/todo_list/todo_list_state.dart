@@ -1,16 +1,16 @@
+import 'package:equatable/equatable.dart';
 import 'package:todos/core/error/failures.dart';
 import 'package:todos/presentation/base/index.dart';
 import '../../../domain/model/todo_model.dart';
 
-class TodoListState extends BaseState {
+class TodoListState extends BaseState with EquatableMixin {
   List<TodoModel>? todos;
   TodoListState({
     this.todos,
     LoadingStatus? loadingStatus,
-    Failure? failure,
+    super.failure,
   }) : super(
-            loadingStatus: loadingStatus ?? LoadingStatus.none,
-            failure: failure);
+            loadingStatus: loadingStatus ?? LoadingStatus.none);
 
   TodoListState copyWith(
       {List<TodoModel>? todos,
@@ -21,12 +21,15 @@ class TodoListState extends BaseState {
         failure: failure ?? this.failure,
         todos: todos ?? this.todos);
   }
+
+  @override
+  List<Object?> get props => [todos, loadingStatus, failure];
 }
 
 class OnUpdateTotoSuccessState extends TodoListState {
   TodoModel todo;
   OnUpdateTotoSuccessState({
     required this.todo,
-    List<TodoModel>? todos,
-  }) : super(loadingStatus: LoadingStatus.finish, todos: todos);
+    super.todos,
+  }) : super(loadingStatus: LoadingStatus.finish);
 }

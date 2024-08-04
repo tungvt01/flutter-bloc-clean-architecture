@@ -12,20 +12,17 @@ class ProgressHud extends StatelessWidget {
   final Widget child;
 
   const ProgressHud({
-    Key? key,
+    super.key,
     this.inAsyncCall = false,
     this.opacity = 0.3,
     this.color = Colors.white,
     this.progressIndicator = const CircularProgressIndicator(
       valueColor:AlwaysStoppedAnimation<Color>(AppColors.primaryColor),
     ),
-    // this.progressIndicator = const CupertinoActivityIndicator(
-    //   radius: 20,
-    // ),
     this.offset,
     this.dismissible = false,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,15 +34,15 @@ class ProgressHud extends StatelessWidget {
         layOutProgressIndicator = Center(child: progressIndicator);
       } else {
         layOutProgressIndicator = Positioned(
-          child: progressIndicator,
           left: offset?.dx ?? 0,
           top: offset?.dy ?? 0,
+          child: progressIndicator,
         );
       }
       final modal = [
         Opacity(
-          child: ModalBarrier(dismissible: dismissible, color: color),
           opacity: opacity,
+          child: ModalBarrier(dismissible: dismissible, color: color),
         ),
         layOutProgressIndicator
       ];

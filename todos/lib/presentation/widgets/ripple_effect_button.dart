@@ -5,8 +5,7 @@ import '../styles/index.dart';
 class RippleEffectButton extends StatelessWidget {
   final Widget child;
   final VoidCallback? onPress;
-  const RippleEffectButton({required this.child, this.onPress, Key? key})
-      : super(key: key);
+  const RippleEffectButton({required this.child, this.onPress, super.key});
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -17,7 +16,7 @@ class RippleEffectButton extends StatelessWidget {
           data: ThemeData(splashColor: AppColors.primaryColor.withAlpha(70)),
           child: Material(
             color: Colors.transparent,
-            child: InkWell(child: Container(), onTap: onPress),
+            child: InkWell(onTap: onPress, child: Container()),
           ),
         ))
       ],

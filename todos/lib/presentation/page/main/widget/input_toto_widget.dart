@@ -80,6 +80,7 @@ class _InputTodoWidgetState extends State<InputTodoWidget> with BasePageMixin {
             ),
             Center(
               child: SolidButton(
+                key: const Key('save-button-key'),
                 height: 50,
                 width: 200,
                 backgroundColor: AppColors.primaryColor,
@@ -88,6 +89,7 @@ class _InputTodoWidgetState extends State<InputTodoWidget> with BasePageMixin {
                   final isValid = _formKey.currentState!.validate();
                   if (isValid) {
                     final data = TodoModel(
+                        id: 0,
                         title: _title.text,
                         description: _description.text,
                         createdDate: DateTime.now(),

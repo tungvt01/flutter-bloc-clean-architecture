@@ -5,4 +5,5 @@ abstract class TodoRepository {
   Future<void> updateTodo({required TodoModel todo});
   Future<List<TodoModel>> getAll();
   Future<List<TodoModel>> getTodoListByCondition({required bool isFinished});
+  Future<bool> remove({required int id});
 }
