@@ -10,9 +10,12 @@ flutter pub run build_runner build
 flutter run
 ```
 
-#### To run unit-test: <br/>
+#### To run unit test: <br/>
 ```bash
-flutter  test test/unit_test/
+flutter test
 ```
-#### Note <br/>
-The application using flutter-sdk 2.10.5
+
+#### To run integration test: <br/>
+```bash
+flutter test integration_test/*
+```
