@@ -11,6 +11,8 @@ import 'package:todos/presentation/page/todo_list/widget/todo_item_widget.dart';
 import 'package:todos/presentation/resources/index.dart';
 import 'package:todos/presentation/widgets/index.dart';
 
+import 'page_object/toto_list_page_object.dart';
+
 main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
@@ -28,41 +30,40 @@ main() {
           child: const MyApp(),
         ));
         await tester.pump();
+        final todoListPO = TodoListPageObject(tester: tester);
 
-        final addTodoButton = find.byType(FloatingActionButton);
-        await tester.tap(addTodoButton);
-        await tester.pump();
+        await todoListPO.clickOnAddNewTodoButton();
         expect(find.byType(InputTodoWidget), findsOneWidget);
 
-        await tester.enterText(find.byType(TextFormField).first, 'Input new title');
-        await tester.enterText(find.byType(TextFormField).last, 'Input new description');
-        await tester.tap(find.text('Save'));
-        await tester.pumpAndSettle(const Duration(seconds: 1));
+        final todoItemFinder = find.descendant(of: find.byType(TodoListPage), matching: find.byType(TodoItemWidget));
 
-        expect(find.descendant(of: find.byType(TodoListPage), matching: find.byType(TodoItemWidget)), findsExactly(1));
+        await todoListPO.enterTodoTitle('Input new title');
+        await todoListPO.enterTodoDescription('Input new description');
+        await todoListPO.clickOnSaveButton();
+        expect(todoItemFinder, findsExactly(1));
         expect(find.text('Input new title'), findsOneWidget);
         expect(find.text('Input new description'), findsOneWidget);
 
-        final markAsDoneButton = find.descendant(of: find.byType(TodoItemWidget), matching:find.byKey(const ValueKey('updateTodoItem')));
-        await tester.tap(markAsDoneButton);
-        await tester.pumpAndSettle(const Duration(seconds: 1));
+        await todoListPO.changeTab(tabName: 'Done');
+        expect(todoItemFinder, findsNothing);
+        await todoListPO.changeTab(tabName: 'All');
+        await todoListPO.clickOnMarkAsDoneButton(atItemIndex: 0);
         expect(find.text('Mark this item is "Done" ?'), findsExactly(1));
-        await tester.tap(find.text('OK'));
-        await tester.pumpAndSettle();
+        await todoListPO.clickOnButtonText(buttonName: 'OK');
+        await todoListPO.changeTab(tabName: 'Done');
+        expect(todoItemFinder, findsExactly(1));
 
-        await tester.drag(find.byType(TodoItemWidget), const Offset(-500, 0));
-        await tester.pump();
-        await tester.tap(find.text('Delete'));
-        await tester.pumpAndSettle();
+        await todoListPO.changeTab(tabName: 'All');
+        await todoListPO.drag(type: TodoItemWidget, offset: const Offset(-500, 0));
+        await todoListPO.clickOnButtonText(buttonName: 'Delete');
         expect(find.text('Are you sure to delete this note?'), findsExactly(1));
         final deleteMenuItem = find.descendant(of: find.byType(RoundContainer), matching: find.text('Delete'));
         final cancelMenuItem = find.descendant(of: find.byType(RoundContainer), matching: find.text('Cancel'));
         expect(deleteMenuItem, findsExactly(1));
         expect(cancelMenuItem, findsExactly(1));
         await tester.ensureVisible(deleteMenuItem);
-        await tester.tap(deleteMenuItem);
-        await tester.pumpAndSettle();
-        expect(find.descendant(of: find.byType(TodoListPage), matching: find.byType(TodoItemWidget)), findsExactly(0));
+        await todoListPO.click(deleteMenuItem);
+        expect(todoItemFinder, findsExactly(0));
       });
     });
   });
