@@ -19,8 +19,8 @@ abstract class BaseUseCase<T> {
       return Left(LocalFailure(msg: ex.message));
     } on IOException catch (ex) {
       return Left(LocalFailure(msg: ex.errorMessage, errorCode: ex.errorCode));
-    } on Exception {
-      return Left(UnknownFailure(msg: serverErrorMessage));
+    } on Exception catch (ex) {
+      return Left(UnknownFailure(msg: ex.toString()));
     } on Error catch (ex) {
       return Left(UnknownFailure(msg: ex.toString()));
     }

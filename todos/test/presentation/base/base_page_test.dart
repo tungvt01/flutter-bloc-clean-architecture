@@ -59,7 +59,7 @@ main() {
 
       expect(basePageState.bloc, baseBloc);
       expect(basePageState.applicationBloc, isInstanceOf<ApplicationBloc>());
-      verify(() => baseBloc.onPageInitStateEvent(any())).called(1);
+      verify(() => baseBloc.onPageInitStateEvent(any(that: isA<PageInitStateEvent>()))).called(1);
       verify(() => baseBloc.onPageDidChangeDependenciesEvent(any())).called(1);
     });
   });
