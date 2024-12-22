@@ -8,11 +8,9 @@ abstract class RemoveTodoUseCase {
   Future<Either<Failure, bool>> removeTodo({required TodoModel todoModel});
 }
 
-class RemoveTodoUseCaseImpl extends BaseUseCase<bool>
+class RemoveTodoUseCaseImpl extends BaseUseCase<bool, TodoModel>
     implements RemoveTodoUseCase {
   TodoRepository todoRepository;
-  late TodoModel _todoModel;
-
   RemoveTodoUseCaseImpl(
     this.todoRepository,
   );
@@ -20,13 +18,12 @@ class RemoveTodoUseCaseImpl extends BaseUseCase<bool>
   @override
   Future<Either<Failure, bool>> removeTodo(
       {required TodoModel todoModel}) async {
-    _todoModel = todoModel;
-    return execute();
+    return execute(todoModel);
   }
 
   @override
-  Future<bool> main() async {
-    await todoRepository.remove(id: _todoModel.id);
+  Future<bool> main(TodoModel? arg) async {
+    await todoRepository.remove(id: arg!.id);
     return true;
   }
 }

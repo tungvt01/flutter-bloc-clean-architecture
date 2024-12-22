@@ -8,11 +8,9 @@ abstract class UpdateTodoUseCase {
   Future<Either<Failure, bool>> updateTodo({required TodoModel todoModel});
 }
 
-class UpdateTodoUseCaseImpl extends BaseUseCase<bool>
+class UpdateTodoUseCaseImpl extends BaseUseCase<bool, TodoModel>
     implements UpdateTodoUseCase {
   TodoRepository todoRepository;
-  late TodoModel _todoModel;
-
   UpdateTodoUseCaseImpl(
     this.todoRepository,
   );
@@ -20,13 +18,12 @@ class UpdateTodoUseCaseImpl extends BaseUseCase<bool>
   @override
   Future<Either<Failure, bool>> updateTodo(
       {required TodoModel todoModel}) async {
-    _todoModel = todoModel;
-    return execute();
+    return execute(todoModel);
   }
 
   @override
-  Future<bool> main() async {
-    await todoRepository.updateTodo(todo: _todoModel);
+  Future<bool> main(TodoModel? arg) async {
+    await todoRepository.updateTodo(todo: arg!);
     return true;
   }
 }

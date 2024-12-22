@@ -5,13 +5,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
 
-import 'package:dartz/dartz.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i8;
-import 'package:todos/core/error/failures.dart' as _i7;
-import 'package:todos/domain/model/todo_model.dart' as _i5;
-import 'package:todos/domain/repository/todo_repository.dart' as _i4;
-import 'package:todos/domain/usecase/base_usecase.dart' as _i6;
+import 'package:todos/domain/model/todo_model.dart' as _i4;
+import 'package:todos/domain/repository/todo_repository.dart' as _i2;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -26,32 +22,13 @@ import 'package:todos/domain/usecase/base_usecase.dart' as _i6;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeEither_0<L, R> extends _i1.SmartFake implements _i2.Either<L, R> {
-  _FakeEither_0(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
-class _FakeFuture_1<T1> extends _i1.SmartFake implements _i3.Future<T1> {
-  _FakeFuture_1(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
 /// A class which mocks [TodoRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockTodoRepository extends _i1.Mock implements _i4.TodoRepository {
+class MockTodoRepository extends _i1.Mock implements _i2.TodoRepository {
   @override
-  _i3.Future<void> addNewTodo({required _i5.TodoModel? todo}) => (super.noSuchMethod(
+  _i3.Future<void> addNewTodo({required _i4.TodoModel? todo}) =>
+      (super.noSuchMethod(
         Invocation.method(
           #addNewTodo,
           [],
@@ -62,7 +39,8 @@ class MockTodoRepository extends _i1.Mock implements _i4.TodoRepository {
       ) as _i3.Future<void>);
 
   @override
-  _i3.Future<void> updateTodo({required _i5.TodoModel? todo}) => (super.noSuchMethod(
+  _i3.Future<void> updateTodo({required _i4.TodoModel? todo}) =>
+      (super.noSuchMethod(
         Invocation.method(
           #updateTodo,
           [],
@@ -73,25 +51,29 @@ class MockTodoRepository extends _i1.Mock implements _i4.TodoRepository {
       ) as _i3.Future<void>);
 
   @override
-  _i3.Future<List<_i5.TodoModel>> getAll() => (super.noSuchMethod(
+  _i3.Future<List<_i4.TodoModel>> getAll() => (super.noSuchMethod(
         Invocation.method(
           #getAll,
           [],
         ),
-        returnValue: _i3.Future<List<_i5.TodoModel>>.value(<_i5.TodoModel>[]),
-        returnValueForMissingStub: _i3.Future<List<_i5.TodoModel>>.value(<_i5.TodoModel>[]),
-      ) as _i3.Future<List<_i5.TodoModel>>);
+        returnValue: _i3.Future<List<_i4.TodoModel>>.value(<_i4.TodoModel>[]),
+        returnValueForMissingStub:
+            _i3.Future<List<_i4.TodoModel>>.value(<_i4.TodoModel>[]),
+      ) as _i3.Future<List<_i4.TodoModel>>);
 
   @override
-  _i3.Future<List<_i5.TodoModel>> getTodoListByCondition({required bool? isFinished}) => (super.noSuchMethod(
+  _i3.Future<List<_i4.TodoModel>> getTodoListByCondition(
+          {required bool? isFinished}) =>
+      (super.noSuchMethod(
         Invocation.method(
           #getTodoListByCondition,
           [],
           {#isFinished: isFinished},
         ),
-        returnValue: _i3.Future<List<_i5.TodoModel>>.value(<_i5.TodoModel>[]),
-        returnValueForMissingStub: _i3.Future<List<_i5.TodoModel>>.value(<_i5.TodoModel>[]),
-      ) as _i3.Future<List<_i5.TodoModel>>);
+        returnValue: _i3.Future<List<_i4.TodoModel>>.value(<_i4.TodoModel>[]),
+        returnValueForMissingStub:
+            _i3.Future<List<_i4.TodoModel>>.value(<_i4.TodoModel>[]),
+      ) as _i3.Future<List<_i4.TodoModel>>);
 
   @override
   _i3.Future<bool> remove({required int? id}) => (super.noSuchMethod(
@@ -103,73 +85,4 @@ class MockTodoRepository extends _i1.Mock implements _i4.TodoRepository {
         returnValue: _i3.Future<bool>.value(false),
         returnValueForMissingStub: _i3.Future<bool>.value(false),
       ) as _i3.Future<bool>);
-}
-
-/// A class which mocks [BaseUseCase].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockBaseUseCase<T> extends _i1.Mock implements _i6.BaseUseCase<T> {
-  @override
-  _i3.Future<_i2.Either<_i7.Failure, T>> execute() => (super.noSuchMethod(
-        Invocation.method(
-          #execute,
-          [],
-        ),
-        returnValue: _i3.Future<_i2.Either<_i7.Failure, T>>.value(_FakeEither_0<_i7.Failure, T>(
-          this,
-          Invocation.method(
-            #execute,
-            [],
-          ),
-        )),
-        returnValueForMissingStub: _i3.Future<_i2.Either<_i7.Failure, T>>.value(_FakeEither_0<_i7.Failure, T>(
-          this,
-          Invocation.method(
-            #execute,
-            [],
-          ),
-        )),
-      ) as _i3.Future<_i2.Either<_i7.Failure, T>>);
-
-  @override
-  _i3.Future<T> main() => (super.noSuchMethod(
-        Invocation.method(
-          #main,
-          [],
-        ),
-        returnValue: _i8.ifNotNull(
-              _i8.dummyValueOrNull<T>(
-                this,
-                Invocation.method(
-                  #main,
-                  [],
-                ),
-              ),
-              (T v) => _i3.Future<T>.value(v),
-            ) ??
-            _FakeFuture_1<T>(
-              this,
-              Invocation.method(
-                #main,
-                [],
-              ),
-            ),
-        returnValueForMissingStub: _i8.ifNotNull(
-              _i8.dummyValueOrNull<T>(
-                this,
-                Invocation.method(
-                  #main,
-                  [],
-                ),
-              ),
-              (T v) => _i3.Future<T>.value(v),
-            ) ??
-            _FakeFuture_1<T>(
-              this,
-              Invocation.method(
-                #main,
-                [],
-              ),
-            ),
-      ) as _i3.Future<T>);
 }

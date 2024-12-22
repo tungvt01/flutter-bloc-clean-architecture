@@ -9,10 +9,9 @@ abstract class GetTodoListByConditionUseCase {
       {required bool isFinished});
 }
 
-class GetTodoListByConditionUseCaseImpl extends BaseUseCase<List<TodoModel>>
+class GetTodoListByConditionUseCaseImpl extends BaseUseCase<List<TodoModel>, bool>
     implements GetTodoListByConditionUseCase {
   TodoRepository todoRepository;
-  bool _isFinished = false;
 
   GetTodoListByConditionUseCaseImpl(
     this.todoRepository,
@@ -21,14 +20,13 @@ class GetTodoListByConditionUseCaseImpl extends BaseUseCase<List<TodoModel>>
   @override
   Future<Either<Failure, List<TodoModel>>> getTodoListByCondition(
       {required bool isFinished}) {
-    _isFinished = isFinished;
-    return execute();
+    return execute(isFinished);
   }
 
   @override
-  Future<List<TodoModel>> main() async {
+  Future<List<TodoModel>> main(bool? arg) async {
     final todos =
-        await todoRepository.getTodoListByCondition(isFinished: _isFinished);
+        await todoRepository.getTodoListByCondition(isFinished: arg!);
     return todos;
   }
 }

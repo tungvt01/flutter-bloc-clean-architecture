@@ -8,10 +8,9 @@ abstract class AddNewTotoUseCase {
   Future<Either<Failure, bool>> addNewTodo({required TodoModel todoModel});
 }
 
-class AddNewTotoUseCaseImpl extends BaseUseCase<bool>
+class AddNewTotoUseCaseImpl extends BaseUseCase<bool, TodoModel>
     implements AddNewTotoUseCase {
   TodoRepository todoRepository;
-  late TodoModel _todoModel;
 
   AddNewTotoUseCaseImpl(
     this.todoRepository,
@@ -20,13 +19,12 @@ class AddNewTotoUseCaseImpl extends BaseUseCase<bool>
   @override
   Future<Either<Failure, bool>> addNewTodo(
       {required TodoModel todoModel}) async {
-    _todoModel = todoModel;
-    return execute();
+    return execute(todoModel);
   }
 
   @override
-  Future<bool> main() async {
-    await todoRepository.addNewTodo(todo: _todoModel);
+  Future<bool> main(TodoModel? arg) async {
+    await todoRepository.addNewTodo(todo: arg!);
     return true;
   }
 }

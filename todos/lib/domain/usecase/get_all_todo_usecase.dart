@@ -8,7 +8,7 @@ abstract class GetAllTodoUseCase {
   Future<Either<Failure, List<TodoModel>>> getAll();
 }
 
-class GetAllTodoUseCaseImpl extends BaseUseCase<List<TodoModel>>
+class GetAllTodoUseCaseImpl extends BaseUseCase<List<TodoModel>, void>
     implements GetAllTodoUseCase {
   TodoRepository todoRepository;
 
@@ -18,11 +18,11 @@ class GetAllTodoUseCaseImpl extends BaseUseCase<List<TodoModel>>
 
   @override
   Future<Either<Failure, List<TodoModel>>> getAll() {
-    return execute();
+    return execute(null);
   }
 
   @override
-  Future<List<TodoModel>> main() async {
+  Future<List<TodoModel>> main(void arg) async {
     final todos = await todoRepository.getAll();
     return todos;
   }

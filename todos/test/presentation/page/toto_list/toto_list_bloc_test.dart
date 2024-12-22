@@ -25,7 +25,11 @@ main() {
   late MockRemoveTodoUseCase removeTodoUseCase;
   final initialState = TodoListState(loadingStatus: LoadingStatus.finish, todos: []);
   final todoMock = TodoModel(
-      id: 0, title: "Learning English", description: "Need spend 3 hours for English", createdDate: DateTime.now(), isFinished: false);
+      id: 0,
+      title: "Learning English",
+      description: "Need spend 3 hours for English",
+      createdDate: DateTime.now(),
+      isFinished: false);
 
   setUp(() {
     getAllTodoUseCase = MockGetAllTodoUseCase();
@@ -106,7 +110,11 @@ main() {
   });
 
   final updatedTodoMock = TodoModel(
-      id: 0, title: "Learning English", description: "Need spend 3 hours for English", createdDate: DateTime.now(), isFinished: false);
+      id: 0,
+      title: "Learning English",
+      description: "Need spend 3 hours for English",
+      createdDate: DateTime.now(),
+      isFinished: false);
   group('_onUpdateTodoEventHandler', () {
     blocTest('should update todo item',
         build: () {
@@ -131,7 +139,11 @@ main() {
   });
 
   final deletingTodo = TodoModel(
-      id: 0, title: "Learning English", description: "Need spend 3 hours for English", createdDate: DateTime.now(), isFinished: false);
+      id: 0,
+      title: "Learning English",
+      description: "Need spend 3 hours for English",
+      createdDate: DateTime.now(),
+      isFinished: false);
   group('_onDeleteTotoEventHandler', () {
     blocTest('should delete todo item',
         build: () {

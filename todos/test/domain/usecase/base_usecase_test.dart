@@ -12,13 +12,13 @@ abstract class AnyService {
 
 class MockAnyService extends Mock implements AnyService {}
 
-class TestBaseUseCaseImpl extends BaseUseCase<dynamic> {
+class TestBaseUseCaseImpl extends BaseUseCase<dynamic, dynamic> {
   AnyService service;
 
   TestBaseUseCaseImpl(this.service);
 
   @override
-  Future main() {
+  Future main(dynamic arg) {
     return service.run();
   }
 }
@@ -40,7 +40,7 @@ main() async {
     const value = Right(1);
     when(() => mockService.run()).thenAnswer((_) => Future.value(value));
 
-    final result = await baseUseCase.execute();
+    final result = await baseUseCase.execute(0);
 
     expect(result.getOrElse(() => null), value);
     expect(result.isRight(), true);
@@ -106,7 +106,7 @@ main() async {
     test('Should return failure case $index', () async {
       when(() => mockService.run()).thenThrow(testCase.head);
 
-      final result = await baseUseCase.execute();
+      final result = await baseUseCase.execute(1);
 
       expect(result.isLeft(), true);
       result.fold(
