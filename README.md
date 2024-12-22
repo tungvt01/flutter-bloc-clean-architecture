@@ -1,7 +1,7 @@
 # Flutter Todo application
-Open source code directory by Terminal application on MacOS(or Cmd on WindowsOS)<br/>
+A Flutter To-Do application built using the clean architecture concept, leveraging `flutter_bloc` for state management<br/>
 
-#### Firstly We need to generating necessary Obbjectbox (dart native database) files <br/>
+#### First, we need to generate the necessary files for `objectbox` (Dart native database) and `mockito` (mock test files) using the following command <br/>
 ```bash
 flutter pub run build_runner build
 ```
