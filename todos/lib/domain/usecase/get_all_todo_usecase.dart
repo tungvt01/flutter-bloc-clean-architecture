@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 import 'package:todos/domain/model/todo_model.dart';
 import 'package:todos/domain/repository/todo_repository.dart';
 import '../../core/error/failures.dart';
@@ -8,6 +9,7 @@ abstract class GetAllTodoUseCase {
   Future<Either<Failure, List<TodoModel>>> getAll();
 }
 
+@Injectable(as: GetAllTodoUseCase, env: [Environment.prod, Environment.dev])
 class GetAllTodoUseCaseImpl extends BaseUseCase<List<TodoModel>, void>
     implements GetAllTodoUseCase {
   TodoRepository todoRepository;

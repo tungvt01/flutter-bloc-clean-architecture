@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:injectable/injectable.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:todos/app_injector.dart';
+import 'package:todos/infrastructure/injection.dart';
 import 'package:todos/main.dart';
 import 'package:todos/presentation/app/index.dart';
 import 'package:todos/presentation/base/index.dart';
@@ -18,7 +19,7 @@ main() {
 
   setUp(() async {
     appBloc = ApplicationBloc();
-    await initInjector();
+    await configureDependencies(Environment.dev);
     await AppLocalizations.shared.reloadLanguageBundle(languageCode: 'en');
   });
 

@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 import 'package:todos/domain/model/todo_model.dart';
 import 'package:todos/domain/repository/todo_repository.dart';
 import '../../core/error/failures.dart';
@@ -8,6 +9,7 @@ abstract class RemoveTodoUseCase {
   Future<Either<Failure, bool>> removeTodo({required TodoModel todoModel});
 }
 
+@Injectable(as: RemoveTodoUseCase, env: [Environment.prod, Environment.dev])
 class RemoveTodoUseCaseImpl extends BaseUseCase<bool, TodoModel>
     implements RemoveTodoUseCase {
   TodoRepository todoRepository;

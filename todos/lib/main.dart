@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
+import 'package:todos/infrastructure/injection.dart';
 import 'package:todos/presentation/page/main/index.dart';
 import 'package:todos/presentation/utils/index.dart';
-import 'app_injector.dart';
 import 'presentation/app/index.dart';
 import 'presentation/base/index.dart';
 import 'presentation/resources/index.dart';
@@ -9,8 +10,8 @@ import 'presentation/resources/index.dart';
 late ApplicationBloc appBloc;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  configureDependencies(Environment.prod);
   await AppLocalizations.shared.reloadLanguageBundle(languageCode: 'en');
-  await initInjector();
   appBloc = ApplicationBloc();
   runApp(
     BlocProvider<ApplicationBloc>(

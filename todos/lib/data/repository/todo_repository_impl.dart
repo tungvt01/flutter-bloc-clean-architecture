@@ -1,7 +1,9 @@
+import 'package:injectable/injectable.dart';
 import 'package:todos/data/local/todo_dao.dart';
 import 'package:todos/domain/model/todo_model.dart';
 import 'package:todos/domain/repository/todo_repository.dart';
 
+@Injectable(as: TodoRepository, env: [Environment.prod, Environment.dev])
 class TodoRepositoryImpl extends TodoRepository {
   final TodoDAO _todoDAO;
   TodoRepositoryImpl(this._todoDAO);

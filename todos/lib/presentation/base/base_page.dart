@@ -1,11 +1,11 @@
 import 'package:focus_detector/focus_detector.dart';
 import 'package:todos/core/error/failures.dart';
+import 'package:todos/infrastructure/injection.dart';
 import 'package:todos/presentation/app/index.dart';
 import 'package:todos/presentation/base/index.dart';
 
-import '../../app_injector.dart';
-import '../navigator/page_navigator.dart';
-import '../utils/index.dart';
+import 'package:todos/presentation/navigator/page_navigator.dart';
+import 'package:todos/presentation/utils/index.dart';
 import 'base_page_mixin.dart';
 
 export 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,7 +37,7 @@ abstract class BasePageState<T extends BaseBloc<BaseEvent, BaseState>, P extends
 
   @override
   void initState() {
-    bloc = injector.get<T>();
+    bloc = injector.get<T>(type: T);
     applicationBloc = BlocProvider.of<ApplicationBloc>(context);
 
     bloc.onPageInitStateEvent(PageInitStateEvent(context: context));

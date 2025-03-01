@@ -1,6 +1,7 @@
+import 'package:injectable/injectable.dart';
 import 'package:todos/core/error/exceptions.dart';
 import 'package:todos/domain/model/todo_model.dart';
-import 'package:todos/objectbox.g.dart';
+import 'package:todos/objectbox.g.dart' as database;
 
 abstract class TodoDAO {
   Future<List<TodoModel>> getAll();
@@ -12,18 +13,20 @@ abstract class TodoDAO {
   Future<bool> remove({required int id});
 }
 
+@injectable
 class StoreProvider {
-  Store? store;
+  database.Store? store;
 
-  Future<Store> getStore() async {
+  Future<database.Store> getStore() async {
     if (store == null || store!.isClosed()) {
-      store = await openStore();
+      store = await database.openStore();
     }
 
     return store!;
   }
 }
 
+@Injectable(as: TodoDAO, env: [Environment.prod, Environment.dev])
 class TodoDAOImpl extends TodoDAO {
   StoreProvider storeProvider;
 
@@ -57,11 +60,11 @@ class TodoDAOImpl extends TodoDAO {
     final store = await storeProvider.getStore();
     try {
       final box = store.box<TodoModel>();
-      Condition<TodoModel>? condition;
+      database.Condition<TodoModel>? condition;
       if (isFinished != null) {
-        condition = (TodoModel_.isFinished.equals(isFinished));
+        condition = (database.TodoModel_.isFinished.equals(isFinished));
       }
-      final builder = box.query(condition)..order(TodoModel_.createdDate, flags: Order.descending);
+      final builder = box.query(condition)..order(database.TodoModel_.createdDate, flags: database.Order.descending);
       final query = builder.build();
       result = query.find();
       query.close();

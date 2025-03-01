@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 import 'package:todos/domain/model/todo_model.dart';
 import 'package:todos/domain/usecase/index.dart';
 import 'package:todos/presentation/base/index.dart';
@@ -7,6 +8,7 @@ import 'package:todos/presentation/utils/index.dart';
 import '../../../core/error/failures.dart';
 import 'index.dart';
 
+@Injectable(env: [Environment.prod, Environment.dev])
 class TodoListBloc extends BaseBloc<BaseEvent, TodoListState> {
   final GetAllTodoUseCase _getAllTodoUseCase;
   final UpdateTodoUseCase _updateTotoUseCase;

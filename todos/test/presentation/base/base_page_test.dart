@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:todos/app_injector.dart';
+import 'package:todos/infrastructure/injection.dart';
 import 'package:todos/presentation/app/application_bloc.dart';
 import 'package:todos/presentation/base/base_bloc.dart';
 import 'package:todos/presentation/base/base_event.dart';

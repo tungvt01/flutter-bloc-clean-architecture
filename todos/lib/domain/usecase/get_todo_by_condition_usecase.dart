@@ -1,7 +1,8 @@
 import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 import 'package:todos/domain/model/todo_model.dart';
 import 'package:todos/domain/repository/todo_repository.dart';
-import '../../core/error/failures.dart';
+import 'package:todos/core/error/failures.dart';
 import 'base_usecase.dart';
 
 abstract class GetTodoListByConditionUseCase {
@@ -9,6 +10,7 @@ abstract class GetTodoListByConditionUseCase {
       {required bool isFinished});
 }
 
+@Injectable(as: GetTodoListByConditionUseCase, env: [Environment.prod, Environment.dev])
 class GetTodoListByConditionUseCaseImpl extends BaseUseCase<List<TodoModel>, bool>
     implements GetTodoListByConditionUseCase {
   TodoRepository todoRepository;
