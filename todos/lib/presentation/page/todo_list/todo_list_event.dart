@@ -14,7 +14,7 @@ class OnRequestUpdateTodoEvent extends BaseEvent {
 
 class OnRequestDeleteTodoEvent extends BaseEvent {
   TodoModel todo;
-  OnRequestDeleteTodoEvent({ required this.todo });
+  OnRequestDeleteTodoEvent({required this.todo});
 }
 
 class UpdateTotoSuccessEvent extends BaseEvent {

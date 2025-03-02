@@ -18,8 +18,9 @@ class RemoveTodoUseCaseImpl extends BaseUseCase<bool, TodoModel>
   );
 
   @override
-  Future<Either<Failure, bool>> removeTodo(
-      {required TodoModel todoModel}) async {
+  Future<Either<Failure, bool>> removeTodo({
+    required TodoModel todoModel,
+  }) async {
     return execute(todoModel);
   }
 

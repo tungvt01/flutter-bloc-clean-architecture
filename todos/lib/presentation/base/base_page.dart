@@ -22,7 +22,8 @@ abstract class BasePage extends StatefulWidget {
   final PageTag tag;
 }
 
-abstract class BasePageState<T extends BaseBloc<BaseEvent, BaseState>, P extends BasePage> extends State<P> with BasePageMixin {
+abstract class BasePageState<T extends BaseBloc<BaseEvent, BaseState>,
+    P extends BasePage> extends State<P> with BasePageMixin {
   late T bloc;
   late BuildContext subContext;
   late ApplicationBloc applicationBloc;
@@ -32,7 +33,9 @@ abstract class BasePageState<T extends BaseBloc<BaseEvent, BaseState>, P extends
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    bloc.onPageDidChangeDependenciesEvent(PageDidChangeDependenciesEvent(context: context));
+    bloc.onPageDidChangeDependenciesEvent(
+      PageDidChangeDependenciesEvent(context: context),
+    );
   }
 
   @override
@@ -54,7 +57,7 @@ abstract class BasePageState<T extends BaseBloc<BaseEvent, BaseState>, P extends
           context: context,
           message: AppLocalizations.shared.commonMessageServerMaintenance,
         );
-        if (result) {
+        if (result && mounted) {
           navigator.popToRoot(context: context);
           applicationBloc.dispatchEvent(AccessTokenExpiredEvent());
         }
@@ -62,7 +65,8 @@ abstract class BasePageState<T extends BaseBloc<BaseEvent, BaseState>, P extends
       }
       String message = '';
       Logger().d('[Debug]: error ${state.failure?.message}');
-      if (state.failure!.message == internetErrorMessage || state.failure!.message == socketErrorMessage) {
+      if (state.failure!.message == internetErrorMessage ||
+          state.failure!.message == socketErrorMessage) {
         message = AppLocalizations.shared.commonMessageConnectionError;
       } else if (state.failure!.message == serverErrorMessage) {
         message = AppLocalizations.shared.commonMessageServerMaintenance;
@@ -81,28 +85,41 @@ abstract class BasePageState<T extends BaseBloc<BaseEvent, BaseState>, P extends
   Widget build(BuildContext context) {
     return FocusDetector(
       onFocusGained: () {
-        bloc.onPageDidAppearEvent(PageDidAppearEvent(tag: widget.tag, context: context));
+        bloc.onPageDidAppearEvent(
+          PageDidAppearEvent(tag: widget.tag, context: context),
+        );
       },
       onFocusLost: () {
-        bloc.onPageDidDisappearEvent(PageDidDisappearEvent(tag: widget.tag, context: context));
+        bloc.onPageDidDisappearEvent(
+          PageDidDisappearEvent(tag: widget.tag, context: context),
+        );
       },
       onForegroundLost: () {
-        bloc.onAppEnterBackgroundEvent(AppEnterBackgroundEvent(context: context, tag: widget.tag));
+        bloc.onAppEnterBackgroundEvent(
+          AppEnterBackgroundEvent(context: context, tag: widget.tag),
+        );
       },
       onForegroundGained: () {
-        bloc.onAppGainForegroundEvent(AppGainForegroundEvent(context: context, tag: widget.tag));
+        bloc.onAppGainForegroundEvent(
+          AppGainForegroundEvent(context: context, tag: widget.tag),
+        );
       },
       child: Scaffold(
         // backgroundColor: Colors.transparent,
         resizeToAvoidBottomInset: resizeToAvoidBottomInset,
         body: BlocProvider<T>(
           create: (context) => bloc,
-          child: BlocListener<T, BaseState>(listener: (context, state) async {
-            stateListenerHandler(state);
-          }, child: LayoutBuilder(builder: (sub, _) {
-            subContext = sub;
-            return buildLayout(subContext, bloc);
-          })),
+          child: BlocListener<T, BaseState>(
+            listener: (context, state) async {
+              stateListenerHandler(state);
+            },
+            child: LayoutBuilder(
+              builder: (sub, _) {
+                subContext = sub;
+                return buildLayout(subContext, bloc);
+              },
+            ),
+          ),
         ),
       ),
     );

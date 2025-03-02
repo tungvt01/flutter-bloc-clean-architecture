@@ -22,7 +22,10 @@ class BasePageImpl extends BasePage {
 
 class BasePageStateImpl extends BasePageState<BaseBlocImpl, BasePageImpl> {
   @override
-  Widget buildLayout(BuildContext context, BaseBloc<BaseEvent, BaseState> bloc) {
+  Widget buildLayout(
+    BuildContext context,
+    BaseBloc<BaseEvent, BaseState> bloc,
+  ) {
     return Container();
   }
 }
@@ -40,26 +43,35 @@ main() {
     await injector.reset();
     injector.registerFactory<BaseBlocImpl>(() => baseBloc);
     reset(baseBloc);
-    when(() => baseBloc.stream).thenAnswer((_) => BehaviorSubject<BaseState>().stream);
+    when(() => baseBloc.stream)
+        .thenAnswer((_) => BehaviorSubject<BaseState>().stream);
     when(() => baseBloc.state).thenAnswer((_) => IdlState());
     when(() => baseBloc.close()).thenAnswer((_) => Future<void>.value());
   });
 
   testWidgets('BasePageImpl initState', (tester) async {
     await tester.runAsync(() async {
-      await tester.pumpWidget(Directionality(
-        textDirection: TextDirection.ltr,
-        child: BlocProvider.value(
+      await tester.pumpWidget(
+        Directionality(
+          textDirection: TextDirection.ltr,
+          child: BlocProvider.value(
             value: ApplicationBloc(),
             child: const BasePageImpl(
               tag: PageTag.main,
-            )),
-      ));
-      final BasePageStateImpl basePageState = tester.state(find.byType(BasePageImpl));
+            ),
+          ),
+        ),
+      );
+      final BasePageStateImpl basePageState =
+          tester.state(find.byType(BasePageImpl));
 
       expect(basePageState.bloc, baseBloc);
       expect(basePageState.applicationBloc, isInstanceOf<ApplicationBloc>());
-      verify(() => baseBloc.onPageInitStateEvent(any(that: isA<PageInitStateEvent>()))).called(1);
+      verify(
+        () => baseBloc.onPageInitStateEvent(
+          any(that: isA<PageInitStateEvent>()),
+        ),
+      ).called(1);
       verify(() => baseBloc.onPageDidChangeDependenciesEvent(any())).called(1);
     });
   });

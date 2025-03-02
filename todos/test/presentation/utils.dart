@@ -8,10 +8,11 @@ Widget generateTestPage({required Widget page}) {
       DefaultMaterialLocalizations.delegate,
     ],
     home: Directionality(
-        textDirection: TextDirection.ltr,
-        child: BlocProvider.value(
-          value: ApplicationBloc(),
-          child: page,
-        )),
+      textDirection: TextDirection.ltr,
+      child: BlocProvider.value(
+        value: ApplicationBloc(),
+        child: page,
+      ),
+    ),
   );
 }

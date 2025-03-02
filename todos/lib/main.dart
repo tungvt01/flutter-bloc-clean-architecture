@@ -41,15 +41,17 @@ class MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textSelectionTheme: const TextSelectionThemeData(
-            selectionHandleColor: Colors.transparent),
+          selectionHandleColor: Colors.transparent,
+        ),
       ),
       home: BlocBuilder<ApplicationBloc, BaseState>(
-          bloc: appBloc,
-          builder: (context, state) {
-            return const MainPage(
-              pageTag: PageTag.main,
-            );
-          }),
+        bloc: appBloc,
+        builder: (context, state) {
+          return const MainPage(
+            pageTag: PageTag.main,
+          );
+        },
+      ),
     );
   }
 

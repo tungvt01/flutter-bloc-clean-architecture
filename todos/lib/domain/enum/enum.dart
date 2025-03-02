@@ -13,14 +13,8 @@ extension PhoneNumberStatusExtensions on PhoneNumberStatus {
         return 'UserVerified';
       case PhoneNumberStatus.userLockedException:
         return 'UserLockedException';
-      default:
-        return '';
     }
   }
 }
 
-enum ExchangeType{
-  deposit,
-  withdraw
-}
-
+enum ExchangeType { deposit, withdraw }

@@ -53,38 +53,40 @@ class TodoListPageState extends BasePageState<TodoListBloc, TodoListPage> {
 
   @override
   Widget buildLayout(BuildContext context, BaseBloc bloc) {
-    return BlocBuilder<TodoListBloc, TodoListState>(builder: (ctx, state) {
-      return state.todos == null
-          ? buildShimmer()
-          : Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: SmartRefresher(
-                onRefresh: () {
-                  bloc.dispatchEvent(OnOnFetchingTodoListEvent(widget.tag));
-                },
-                controller: _controller,
-                child: state.todos!.isEmpty
-                    ? const NoDataMessageWidget()
-                    : ListView.separated(
-                        separatorBuilder: (context, index) => const SizedBox(
-                          height: 15,
+    return BlocBuilder<TodoListBloc, TodoListState>(
+      builder: (ctx, state) {
+        return state.todos == null
+            ? buildShimmer()
+            : Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: SmartRefresher(
+                  onRefresh: () {
+                    bloc.dispatchEvent(OnOnFetchingTodoListEvent(widget.tag));
+                  },
+                  controller: _controller,
+                  child: state.todos!.isEmpty
+                      ? const NoDataMessageWidget()
+                      : ListView.separated(
+                          separatorBuilder: (context, index) => const SizedBox(
+                            height: 15,
+                          ),
+                          itemCount: state.todos!.length,
+                          itemBuilder: (_, index) {
+                            return TodoItemWidget(
+                              onUpdateClicked: (todo) {
+                                _showUpdateConfirmDialog(todo);
+                              },
+                              todo: state.todos![index],
+                              onConfirmDismiss: (c, todo) {
+                                _showDeleteConfirmDialog(todo);
+                              },
+                            );
+                          },
                         ),
-                        itemCount: state.todos!.length,
-                        itemBuilder: (_, index) {
-                          return TodoItemWidget(
-                            onUpdateClicked: (todo) {
-                              _showUpdateConfirmDialog(todo);
-                            },
-                            todo: state.todos![index],
-                            onConfirmDismiss: (c, todo) {
-                              _showDeleteConfirmDialog(todo);
-                            },
-                          );
-                        },
-                      ),
-              ),
-            );
-    });
+                ),
+              );
+      },
+    );
   }
 
   _showUpdateConfirmDialog(TodoModel todo) async {

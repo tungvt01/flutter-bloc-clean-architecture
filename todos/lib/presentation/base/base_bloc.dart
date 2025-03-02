@@ -18,5 +18,5 @@ abstract class BaseBloc<Event extends BaseEvent, State extends BaseState>
   void onAppGainForegroundEvent(AppGainForegroundEvent event) {}
 
   //route navigation result
-  void onRouteNavigationResult(dynamic result){}
+  void onRouteNavigationResult(dynamic result) {}
 }

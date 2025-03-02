@@ -12,13 +12,14 @@ class RippleEffectButton extends StatelessWidget {
       children: [
         child,
         Positioned.fill(
-            child: Theme(
-          data: ThemeData(splashColor: AppColors.primaryColor.withAlpha(70)),
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(onTap: onPress, child: Container()),
+          child: Theme(
+            data: ThemeData(splashColor: AppColors.primaryColor.withAlpha(70)),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(onTap: onPress, child: Container()),
+            ),
           ),
-        ))
+        ),
       ],
     );
   }

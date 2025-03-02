@@ -16,7 +16,11 @@ class ApplicationState extends BaseState with EquatableMixin {
     Failure? failure,
     LoadingStatus? status,
   }) {
-    return ApplicationState(tag: tag ?? this.tag, failure: failure, status: status);
+    return ApplicationState(
+      tag: tag ?? this.tag,
+      failure: failure,
+      status: status,
+    );
   }
 
   @override

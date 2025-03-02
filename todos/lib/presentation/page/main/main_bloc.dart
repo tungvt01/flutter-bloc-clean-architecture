@@ -11,13 +11,16 @@ class MainBloc extends BaseBloc<BaseEvent, MainState> {
   }
 
   _onAddNewTodoHandler(
-      OnAddNewTodoEvent event, Emitter<MainState> emitter) async {
+    OnAddNewTodoEvent event,
+    Emitter<MainState> emitter,
+  ) async {
     emitter(state.copyWith(loadingStatus: LoadingStatus.loading));
     final result = await _addNewTotoUseCase.addNewTodo(todoModel: event.todo);
 
     final newState = result.fold<MainState>(
-        (l) => state.copyWith(failure: l, loadingStatus: LoadingStatus.finish),
-        (r) => AddNewTodoSuccessState(todo: event.todo));
+      (l) => state.copyWith(failure: l, loadingStatus: LoadingStatus.finish),
+      (r) => AddNewTodoSuccessState(todo: event.todo),
+    );
     emitter(newState);
   }
 

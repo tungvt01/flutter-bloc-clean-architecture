@@ -38,7 +38,9 @@ class TodoDAOImpl extends TodoDAO {
   }
 
   @override
-  Future<List<TodoModel>> getTodoListByCondition({required bool isFinished}) async {
+  Future<List<TodoModel>> getTodoListByCondition({
+    required bool isFinished,
+  }) async {
     return _queryTodoList(isFinished: isFinished);
   }
 
@@ -62,9 +64,13 @@ class TodoDAOImpl extends TodoDAO {
       final box = store.box<TodoModel>();
       database.Condition<TodoModel>? condition;
       if (isFinished != null) {
-        condition = (database.TodoModel_.isFinished.equals(isFinished));
+        condition = database.TodoModel_.isFinished.equals(isFinished);
       }
-      final builder = box.query(condition)..order(database.TodoModel_.createdDate, flags: database.Order.descending);
+      final builder = box.query(condition)
+        ..order(
+          database.TodoModel_.createdDate,
+          flags: database.Order.descending,
+        );
       final query = builder.build();
       result = query.find();
       query.close();

@@ -69,7 +69,8 @@ class PageNavigator {
     Navigator.of(context).popUntil((Route<dynamic> route) {
       final match = route.settings.name == stopTag.toString();
       Logger().d(
-          "popUntilTag -->>$stopTag   --->> ${route.settings.name}  --->> match: $match ");
+        'popUntilTag: $stopTag - ${route.settings.name} match: $match ',
+      );
       return match;
     });
   }

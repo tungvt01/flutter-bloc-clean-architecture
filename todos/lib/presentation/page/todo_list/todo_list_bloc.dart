@@ -15,16 +15,21 @@ class TodoListBloc extends BaseBloc<BaseEvent, TodoListState> {
   final GetTodoListByConditionUseCase _getTodoListByConditionUseCase;
   final RemoveTodoUseCase _removeTodoUseCase;
 
-  TodoListBloc(this._getAllTodoUseCase, this._updateTotoUseCase,
-      this._getTodoListByConditionUseCase, this._removeTodoUseCase)
-      : super(initState: TodoListState()) {
+  TodoListBloc(
+    this._getAllTodoUseCase,
+    this._updateTotoUseCase,
+    this._getTodoListByConditionUseCase,
+    this._removeTodoUseCase,
+  ) : super(initState: TodoListState()) {
     on<OnOnFetchingTodoListEvent>((e, m) => _onFetchingTotoHandler(e, m));
     on<OnRequestUpdateTodoEvent>((e, m) => _onUpdateTodoEventHandler(e, m));
     on<OnRequestDeleteTodoEvent>((e, m) => _onDeleteTotoEventHandler(e, m));
   }
 
   _onFetchingTotoHandler(
-      OnOnFetchingTodoListEvent event, Emitter<TodoListState> emitter) async {
+    OnOnFetchingTodoListEvent event,
+    Emitter<TodoListState> emitter,
+  ) async {
     emitter(state.copyWith(loadingStatus: LoadingStatus.loading));
     Either<Failure, List<TodoModel>> result;
 
@@ -32,17 +37,21 @@ class TodoListBloc extends BaseBloc<BaseEvent, TodoListState> {
       result = await _getAllTodoUseCase.getAll();
     } else {
       result = await _getTodoListByConditionUseCase.getTodoListByCondition(
-          isFinished: event.tag == PageTag.doneTodo);
+        isFinished: event.tag == PageTag.doneTodo,
+      );
     }
 
     final newState = result.fold<TodoListState>(
-        (l) => state.copyWith(failure: l, loadingStatus: LoadingStatus.finish),
-        (r) => state.copyWith(loadingStatus: LoadingStatus.finish, todos: r));
+      (l) => state.copyWith(failure: l, loadingStatus: LoadingStatus.finish),
+      (r) => state.copyWith(loadingStatus: LoadingStatus.finish, todos: r),
+    );
     emitter(newState);
   }
 
   _onUpdateTodoEventHandler(
-      OnRequestUpdateTodoEvent event, Emitter<TodoListState> emitter) async {
+    OnRequestUpdateTodoEvent event,
+    Emitter<TodoListState> emitter,
+  ) async {
     emitter(state.copyWith(loadingStatus: LoadingStatus.loading));
     final result = await _updateTotoUseCase.updateTodo(todoModel: event.todo);
     final newState = result.fold<TodoListState>(
@@ -59,7 +68,9 @@ class TodoListBloc extends BaseBloc<BaseEvent, TodoListState> {
   }
 
   _onDeleteTotoEventHandler(
-      OnRequestDeleteTodoEvent event, Emitter<TodoListState> emitter) async {
+    OnRequestDeleteTodoEvent event,
+    Emitter<TodoListState> emitter,
+  ) async {
     emitter(state.copyWith(loadingStatus: LoadingStatus.loading));
     final result = await _removeTodoUseCase.removeTodo(todoModel: event.todo);
     final newState = result.fold<TodoListState>(

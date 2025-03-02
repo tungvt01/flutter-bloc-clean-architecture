@@ -4,20 +4,21 @@ import 'package:rxdart/subjects.dart';
 import 'index.dart';
 
 class ApplicationBloc extends BaseBloc<ApplicationEvent, ApplicationState> {
-
   final PublishSubject<BaseEvent> _broadcastEventManager =
       PublishSubject<BaseEvent>();
 
   ApplicationBloc()
       : super(initState: ApplicationState(tag: AppLaunchTag.splash)) {
     on<AppLaunched>(_onAppLaunchHandler);
-
   }
 
-
   _onAppLaunchHandler(
-      AppLaunched event, Emitter<ApplicationState> emitter) async {
-    emitter(state.copyWith(status: LoadingStatus.finish,tag: AppLaunchTag.main));
+    AppLaunched event,
+    Emitter<ApplicationState> emitter,
+  ) async {
+    emitter(
+      state.copyWith(status: LoadingStatus.finish, tag: AppLaunchTag.main),
+    );
   }
 
   @override

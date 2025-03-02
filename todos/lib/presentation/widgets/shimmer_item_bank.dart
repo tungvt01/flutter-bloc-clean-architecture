@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ShimmeItemBank extends StatelessWidget {
-  const ShimmeItemBank({Key? key}) : super(key: key);
+  const ShimmeItemBank({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,36 +16,41 @@ class ShimmeItemBank extends StatelessWidget {
         enabled: enabled,
         child: Container(
           decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              border: Border.all(
-                width: 1,
-                //isSelected? AppColors.accent2: AppColors.neutral8,
-              )),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            border: Border.all(
+              width: 1,
+              //isSelected? AppColors.accent2: AppColors.neutral8,
+            ),
+          ),
           padding: const EdgeInsets.symmetric(vertical: 18),
           child: Row(
             children: [
               Container(
-                  width: 35,
-                  height: 35,
-                  color: AppColors.neutral8,
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                width: 35,
+                height: 35,
+                color: AppColors.neutral8,
+                margin: const EdgeInsets.symmetric(horizontal: 20),
               ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(width: 180,
+                    Container(
+                      width: 180,
                       height: 10,
-                      color: Colors.white,),
+                      color: Colors.white,
+                    ),
                     const SizedBox(
                       height: 8,
                     ),
-                    Container(width: 150,
+                    Container(
+                      width: 150,
                       height: 10,
-                      color: Colors.white,),
+                      color: Colors.white,
+                    ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),

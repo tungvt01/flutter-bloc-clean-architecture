@@ -8,12 +8,15 @@ class ErrorMessageWidget extends StatelessWidget {
   const ErrorMessageWidget(
     this.error, {
     this.style,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Text(error,
-        maxLines: 10, style: style ?? labelSmall.copyWith(color: Colors.red));
+    return Text(
+      error,
+      maxLines: 10,
+      style: style ?? labelSmall.copyWith(color: Colors.red),
+    );
   }
 }

@@ -24,12 +24,23 @@ void main() async {
 
   test('Should get todos by condition successfully', () async {
     List<TodoModel> response = List.generate(
-        5, (int index) => TodoModel(id: index, title: 'title', description: 'description', createdDate: DateTime.now(), isFinished: true));
-    when(todoRepository.getTodoListByCondition(isFinished: condition)).thenAnswer((_) => Future<List<TodoModel>>.value(response));
+      5,
+      (int index) => TodoModel(
+        id: index,
+        title: 'title',
+        description: 'description',
+        createdDate: DateTime.now(),
+        isFinished: true,
+      ),
+    );
+    when(todoRepository.getTodoListByCondition(isFinished: condition))
+        .thenAnswer((_) => Future<List<TodoModel>>.value(response));
 
-    final result = await updateTodoUseCase.getTodoListByCondition(isFinished: condition);
+    final result =
+        await updateTodoUseCase.getTodoListByCondition(isFinished: condition);
 
-    verify(todoRepository.getTodoListByCondition(isFinished: condition)).called(1);
+    verify(todoRepository.getTodoListByCondition(isFinished: condition))
+        .called(1);
     expect(result, isRight);
     expect(result.getRightOrFailTest(), response);
 
@@ -40,11 +51,14 @@ void main() async {
       'Should get todos by condition'
       ' unsuccessful', () async {
     final exception = RemoteException(errorMessage: 'error message');
-    when(todoRepository.getTodoListByCondition(isFinished: condition)).thenThrow(exception);
+    when(todoRepository.getTodoListByCondition(isFinished: condition))
+        .thenThrow(exception);
 
-    final result = await updateTodoUseCase.getTodoListByCondition(isFinished: condition);
+    final result =
+        await updateTodoUseCase.getTodoListByCondition(isFinished: condition);
 
-    verify(todoRepository.getTodoListByCondition(isFinished: condition)).called(1);
+    verify(todoRepository.getTodoListByCondition(isFinished: condition))
+        .called(1);
     expect(result, isLeft);
     expect(result.getLeftOrFailTest(), isInstanceOf<RemoteFailure>());
     expect(result.getLeftOrFailTest().message, exception.errorMessage);

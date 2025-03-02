@@ -2,14 +2,13 @@ import 'package:todos/presentation/app/index.dart';
 import 'package:todos/presentation/base/base_page_mixin.dart';
 import 'package:todos/presentation/base/index.dart';
 import 'package:todos/presentation/navigator/page_navigator.dart';
-import 'package:todos/presentation/page/main/widget/input_toto_widget.dart';
+import 'package:todos/presentation/page/main/widget/input_todo_widget.dart';
 import 'package:todos/presentation/page/todo_list/index.dart';
 import '../../utils/index.dart';
 import 'index.dart';
 
 class MainPage extends BasePage {
-  const MainPage({required PageTag pageTag, super.key})
-      : super(tag: pageTag);
+  const MainPage({required PageTag pageTag, super.key}) : super(tag: pageTag);
 
   @override
   State<StatefulWidget> createState() => MainPageState();
@@ -29,40 +28,46 @@ class MainPageState extends BasePageState<MainBloc, MainPage> {
 
   @override
   Widget buildLayout(BuildContext context, BaseBloc bloc) {
-    return BlocBuilder<MainBloc, MainState>(builder: (ctx, state) {
-      return Scaffold(
-        floatingActionButton: _CreateTodoButton(
-          onPressed: () {
-            _onAddNewTodoClickedHandler();
-          },
-        ),
-        bottomNavigationBar: _BottomNavigationBar(
+    return BlocBuilder<MainBloc, MainState>(
+      builder: (ctx, state) {
+        return Scaffold(
+          floatingActionButton: _CreateTodoButton(
+            onPressed: () {
+              _onAddNewTodoClickedHandler();
+            },
+          ),
+          bottomNavigationBar: _BottomNavigationBar(
             initIndex: pageIndex,
             onItemClicked: (index) {
               setState(() {
                 pageIndex = index;
               });
-            }),
-        body: SafeArea(
-          child: IndexedStack(
-            index: pageIndex,
-            children: const [
-              TodoListPage(pageTag: PageTag.allTodo),
-              TodoListPage(pageTag: PageTag.doingTodo),
-              TodoListPage(pageTag: PageTag.doneTodo),
-            ],
+            },
           ),
-        ),
-      );
-    });
+          body: SafeArea(
+            child: IndexedStack(
+              index: pageIndex,
+              children: const [
+                TodoListPage(pageTag: PageTag.allTodo),
+                TodoListPage(pageTag: PageTag.doingTodo),
+                TodoListPage(pageTag: PageTag.doneTodo),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   _onAddNewTodoClickedHandler() async {
     final result = await showPopup(
-        context: context,
-        widget: InputTodoWidget(onConfirm: (data) {
+      context: context,
+      widget: InputTodoWidget(
+        onConfirm: (data) {
           return navigator.popBack(context: context, result: data);
-        }));
+        },
+      ),
+    );
     if (result != null) {
       bloc.dispatchEvent(OnAddNewTodoEvent(todo: result));
     }
@@ -75,8 +80,10 @@ class _BottomNavigationBar extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() => _BottomNavigationBarState();
-  const _BottomNavigationBar(
-      {required this.onItemClicked, required this.initIndex});
+  const _BottomNavigationBar({
+    required this.onItemClicked,
+    required this.initIndex,
+  });
 }
 
 class _BottomNavigationBarState extends State<_BottomNavigationBar> {

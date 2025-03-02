@@ -10,7 +10,13 @@ class MockTodoDAO extends Mock implements TodoDAO {}
 main() {
   late TodoRepository todoRepository;
   late TodoDAO totoDAO;
-  final todo = TodoModel(id: 1, title: 'title', description: 'description', createdDate: DateTime.now(), isFinished: true);
+  final todo = TodoModel(
+    id: 1,
+    title: 'title',
+    description: 'description',
+    createdDate: DateTime.now(),
+    isFinished: true,
+  );
 
   setUp(() {
     totoDAO = MockTodoDAO();
@@ -18,7 +24,8 @@ main() {
   });
 
   test('addNewTodo()', () {
-    when(() => totoDAO.insertOrUpdate(data: todo)).thenAnswer((_) => Future<void>.value());
+    when(() => totoDAO.insertOrUpdate(data: todo))
+        .thenAnswer((_) => Future<void>.value());
 
     todoRepository.addNewTodo(todo: todo);
 
@@ -38,11 +45,14 @@ main() {
   test('getAll()', () async {
     const condition = false;
     final todoList = [todo];
-    when(() => totoDAO.getTodoListByCondition(isFinished: condition)).thenAnswer((_) => Future.value(todoList));
+    when(() => totoDAO.getTodoListByCondition(isFinished: condition))
+        .thenAnswer((_) => Future.value(todoList));
 
-    final result = await todoRepository.getTodoListByCondition(isFinished: condition);
+    final result =
+        await todoRepository.getTodoListByCondition(isFinished: condition);
 
-    verify(() => totoDAO.getTodoListByCondition(isFinished: condition)).called(1);
+    verify(() => totoDAO.getTodoListByCondition(isFinished: condition))
+        .called(1);
     expect(result, todoList);
   });
 }

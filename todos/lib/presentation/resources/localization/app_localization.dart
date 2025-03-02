@@ -15,7 +15,7 @@ class AppLocalizations {
   }
 
   String text(String key) {
-    return _localisedValues[key] ?? "$key not found";
+    return _localisedValues[key] ?? '$key not found';
   }
 
   // defined text
@@ -43,13 +43,13 @@ class AppLocalizations {
       text('common_message_server_maintaince');
 
   Future<void> reloadLanguageBundle({required String languageCode}) async {
-    String path = "assets/jsons/localization_$languageCode.json";
-    String jsonContent = "";
+    String path = 'assets/jsons/localization_$languageCode.json';
+    String jsonContent = '';
     try {
       jsonContent = await rootBundle.loadString(path);
     } catch (_) {
       jsonContent =
-          await rootBundle.loadString("assets/jsons/localization_en.json");
+          await rootBundle.loadString('assets/jsons/localization_en.json');
     }
     _localisedValues = json.decode(jsonContent);
   }

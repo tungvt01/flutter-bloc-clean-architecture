@@ -23,8 +23,17 @@ void main() async {
 
   test('Should delete todo successfully', () async {
     List<TodoModel> response = List.generate(
-        5, (int index) => TodoModel(id: index, title: 'title', description: 'description', createdDate: DateTime.now(), isFinished: true));
-    when(todoRepository.getAll()).thenAnswer((_) => Future<List<TodoModel>>.value(response));
+      5,
+      (int index) => TodoModel(
+        id: index,
+        title: 'title',
+        description: 'description',
+        createdDate: DateTime.now(),
+        isFinished: true,
+      ),
+    );
+    when(todoRepository.getAll())
+        .thenAnswer((_) => Future<List<TodoModel>>.value(response));
 
     final result = await updateTodoUseCase.getAll();
 

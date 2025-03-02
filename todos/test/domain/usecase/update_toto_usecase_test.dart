@@ -31,7 +31,8 @@ void main() async {
 
   test('Should update todo successfully', () async {
     const success = true;
-    when(todoRepository.updateTodo(todo: updatingToto)).thenAnswer((_) => Future<bool>.value(success));
+    when(todoRepository.updateTodo(todo: updatingToto))
+        .thenAnswer((_) => Future<bool>.value(success));
 
     final result = await updateTodoUseCase.updateTodo(todoModel: updatingToto);
 

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ShimmeItemWidget extends StatelessWidget {
-  const ShimmeItemWidget({Key? key}) : super(key: key);
+  const ShimmeItemWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +66,7 @@ class ShimmeItemWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
           ),

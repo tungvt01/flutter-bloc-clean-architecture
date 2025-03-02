@@ -17,7 +17,7 @@ class ProgressHud extends StatelessWidget {
     this.opacity = 0.3,
     this.color = Colors.white,
     this.progressIndicator = const CircularProgressIndicator(
-      valueColor:AlwaysStoppedAnimation<Color>(AppColors.primaryColor),
+      valueColor: AlwaysStoppedAnimation<Color>(AppColors.primaryColor),
     ),
     this.offset,
     this.dismissible = false,
@@ -44,7 +44,7 @@ class ProgressHud extends StatelessWidget {
           opacity: opacity,
           child: ModalBarrier(dismissible: dismissible, color: color),
         ),
-        layOutProgressIndicator
+        layOutProgressIndicator,
       ];
       widgetList += modal;
     }

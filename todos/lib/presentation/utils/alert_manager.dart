@@ -25,76 +25,79 @@ class AlertManager {
     }
   }
 
-  static Future<dynamic> showWidgetDialog(
-      {required BuildContext context,
-      required Widget child,
-      EdgeInsets padding = const EdgeInsets.all(30.0),
-      EdgeInsets contentMargin = const EdgeInsets.only(
-        top: 15,
-        left: 22,
-        right: 22,
-        bottom: 25,
-      )}) async {
+  static Future<dynamic> showWidgetDialog({
+    required BuildContext context,
+    required Widget child,
+    EdgeInsets padding = const EdgeInsets.all(30.0),
+    EdgeInsets contentMargin = const EdgeInsets.only(
+      top: 15,
+      left: 22,
+      right: 22,
+      bottom: 25,
+    ),
+  }) async {
     return showGeneralDialog(
-        pageBuilder: (context, animation1, animation2) {
-          return Scaffold(
-            backgroundColor: Colors.transparent,
-            body: FocusDetector(
-              child: Stack(
-                children: [
-                  Align(
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: padding,
-                      child: RoundContainer(
-                        allRadius: 16,
-                        color: Colors.white,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Padding(
-                              padding: contentMargin,
-                              child: child,
-                            ),
-                          ],
-                        ),
+      pageBuilder: (context, animation1, animation2) {
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          body: FocusDetector(
+            child: Stack(
+              children: [
+                Align(
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: padding,
+                    child: RoundContainer(
+                      allRadius: 16,
+                      color: Colors.white,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Padding(
+                            padding: contentMargin,
+                            child: child,
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          );
-        },
-        barrierColor: Colors.black.withOpacity(0.5),
-        context: context,
-        transitionDuration: const Duration(milliseconds: 200),
-        barrierDismissible: false,
-        transitionBuilder: (context, a1, a2, widget) {
-          return Transform.scale(
-            child: Opacity(
-              opacity: a1.value,
-              child: widget,
-            ),
-            scale: a1.value,
-          );
-        });
+          ),
+        );
+      },
+      barrierColor: Colors.black.withValues(alpha: 0.5),
+      context: context,
+      transitionDuration: const Duration(milliseconds: 200),
+      barrierDismissible: false,
+      transitionBuilder: (context, a1, a2, widget) {
+        return Transform.scale(
+          scale: a1.value,
+          child: Opacity(
+            opacity: a1.value,
+            child: widget,
+          ),
+        );
+      },
+    );
   }
 
-  static Future<bool> showAlert(
-      {required BuildContext context,
-      String? title,
-      required String message,
-      String? okActionTitle,
-      String? cancelTitle,
-      TextStyle? titleStyle,
-      TextStyle? messageStyle,
-      bool? dismissWithBackPress,
-      String? image,
-      Color primaryColor = AppColors.primaryColor,
-      bool allowShowSameMessageTogether = false}) async {
+  static Future<bool> showAlert({
+    required BuildContext context,
+    String? title,
+    required String message,
+    String? okActionTitle,
+    String? cancelTitle,
+    TextStyle? titleStyle,
+    TextStyle? messageStyle,
+    bool? dismissWithBackPress,
+    String? image,
+    Color primaryColor = AppColors.primaryColor,
+    bool allowShowSameMessageTogether = false,
+  }) async {
     if (!allowShowSameMessageTogether && _sameMessageIsShowing(message)) {
       return false;
     }
@@ -110,12 +113,15 @@ class AlertManager {
             width: MediaQuery.of(context).size.width * 0.3,
             child: TextButton(
               style: TextButton.styleFrom(padding: EdgeInsets.zero),
-              child: AutoSizeText(cancelTitle!,
-                  textAlign: TextAlign.center,
-                  style: titleMedium.copyWith(
-                      color: AppColors.neutral1,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700)),
+              child: AutoSizeText(
+                cancelTitle!,
+                textAlign: TextAlign.center,
+                style: titleMedium.copyWith(
+                  color: AppColors.neutral1,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
               onPressed: () {
                 return Navigator.of(context).pop(false);
               },
@@ -136,12 +142,15 @@ class AlertManager {
           width: MediaQuery.of(context).size.width * 0.3,
           child: TextButton(
             style: TextButton.styleFrom(padding: EdgeInsets.zero),
-            child: AutoSizeText(okActionTitle ?? "OK",
-                textAlign: TextAlign.center,
-                style: titleMedium.copyWith(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700)),
+            child: AutoSizeText(
+              okActionTitle ?? 'OK',
+              textAlign: TextAlign.center,
+              style: titleMedium.copyWith(
+                color: Colors.white,
+                fontSize: 12,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
             onPressed: () {
               return Navigator.of(context).pop(true);
             },
@@ -152,102 +161,105 @@ class AlertManager {
     actions.add(okWidget);
     AlertManager._onMessageShow(message);
     final result = await showGeneralDialog<bool>(
-        barrierColor: Colors.black.withOpacity(0.5),
-        transitionBuilder: (context, a1, a2, widget) {
-          return Transform.scale(
-            child: Opacity(
-              opacity: a1.value,
-              child: widget,
-            ),
-            scale: a1.value,
-          );
-        },
-        transitionDuration: const Duration(milliseconds: 200),
-        barrierDismissible: false,
-        context: context,
-        pageBuilder: (context, animation1, animation2) {
-          return FocusDetector(
-            onFocusGained: () {
-              alertShowingCount++;
-            },
-            onFocusLost: () {
-              alertShowingCount--;
-              AlertManager._onMessageHide(message);
-            },
-            child: WillPopScope(
-              onWillPop: () async {
-                return dismissWithBackPress ?? true;
-              },
-              child: Scaffold(
-                backgroundColor: Colors.transparent,
-                body: Stack(
-                  children: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: Padding(
-                        padding: const EdgeInsets.all(30.0),
-                        child: RoundContainer(
-                          allRadius: 16,
-                          color: Colors.white,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SizedBox(
-                                height: (image != null) ? 30 : 0,
+      barrierColor: Colors.black.withValues(alpha: 0.5),
+      transitionBuilder: (context, a1, a2, widget) {
+        return Transform.scale(
+          scale: a1.value,
+          child: Opacity(
+            opacity: a1.value,
+            child: widget,
+          ),
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 200),
+      barrierDismissible: false,
+      context: context,
+      pageBuilder: (context, animation1, animation2) {
+        return FocusDetector(
+          onFocusGained: () {
+            alertShowingCount++;
+          },
+          onFocusLost: () {
+            alertShowingCount--;
+            AlertManager._onMessageHide(message);
+          },
+          child: PopScope(
+            canPop: dismissWithBackPress ?? true,
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              body: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: const EdgeInsets.all(30.0),
+                      child: RoundContainer(
+                        allRadius: 16,
+                        color: Colors.white,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SizedBox(
+                              height: (image != null) ? 30 : 0,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 22.0,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 22.0),
-                                child: Text(
-                                  title ?? '',
-                                  textAlign: TextAlign.center,
-                                  style: titleStyle ??
-                                      titleMedium.copyWith(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.black,
-                                      ),
-                                ),
+                              child: Text(
+                                title ?? '',
+                                textAlign: TextAlign.center,
+                                style: titleStyle ??
+                                    titleMedium.copyWith(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.black,
+                                    ),
                               ),
-                              const SizedBox(
-                                height: 15,
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 22.0,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 22.0),
-                                child: Text(message,
-                                    textAlign: TextAlign.center,
-                                    style: messageStyle ??
-                                        titleMedium.copyWith(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          color: const Color(0xFF666666),
-                                        )),
+                              child: Text(
+                                message,
+                                textAlign: TextAlign.center,
+                                style: messageStyle ??
+                                    titleMedium.copyWith(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: const Color(0xFF666666),
+                                    ),
                               ),
-                              const SizedBox(
-                                height: 25,
-                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: actions,
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              )
-                            ],
-                          ),
+                            ),
+                            const SizedBox(
+                              height: 25,
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: actions,
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
     return result ?? false;
   }
 }

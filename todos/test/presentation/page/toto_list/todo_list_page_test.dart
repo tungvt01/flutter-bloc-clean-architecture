@@ -22,7 +22,12 @@ main() {
   late MockMainBloc mainBloc;
 
   final todoMock = TodoModel(
-      id: 0, title: "Learning English", description: "Need spend 3 hours for English", createdDate: DateTime.now(), isFinished: false);
+    id: 0,
+    title: 'Learning English',
+    description: 'Need spend 3 hours for English',
+    createdDate: DateTime.now(),
+    isFinished: false,
+  );
 
   setUpAll(() {
     mainBloc = MockMainBloc();
@@ -34,25 +39,38 @@ main() {
     injector.registerFactory<MainBloc>(() => mainBloc);
     injector.registerFactory<TodoListBloc>(() => todoListBloc);
     reset(mainBloc);
-    when(() => mainBloc.stream).thenAnswer((_) => BehaviorSubject<MainState>().stream);
-    when(() => mainBloc.state).thenAnswer((_) => MainState(loadingStatus: LoadingStatus.finish));
+    when(() => mainBloc.stream)
+        .thenAnswer((_) => BehaviorSubject<MainState>().stream);
+    when(() => mainBloc.state)
+        .thenAnswer((_) => MainState(loadingStatus: LoadingStatus.finish));
     when(() => mainBloc.close()).thenAnswer((_) => Future<void>.value());
-    when(() => todoListBloc.stream).thenAnswer((_) => BehaviorSubject<TodoListState>.seeded(TodoListState(todos: [todoMock])).stream);
-    when(() => todoListBloc.state).thenAnswer((_) => TodoListState(todos: [todoMock]));
+    when(() => todoListBloc.stream).thenAnswer(
+      (_) => BehaviorSubject<TodoListState>.seeded(
+        TodoListState(todos: [todoMock]),
+      ).stream,
+    );
+    when(() => todoListBloc.state)
+        .thenAnswer((_) => TodoListState(todos: [todoMock]));
     when(() => todoListBloc.close()).thenAnswer((_) => Future<void>.value());
   });
 
   testWidgets('TodoListPage', (tester) async {
     await tester.runAsync(() async {
-      await tester.pumpWidget(generateTestPage(
+      await tester.pumpWidget(
+        generateTestPage(
           page: const MainPage(
-        pageTag: PageTag.main,
-      )));
+            pageTag: PageTag.main,
+          ),
+        ),
+      );
       await tester.pump();
 
       expect(find.byType(TodoItemWidget), findsExactly(1));
 
-      final checkbox = find.descendant(of: find.byType(TodoItemWidget), matching: find.byKey(const ValueKey('updateTodoItem')));
+      final checkbox = find.descendant(
+        of: find.byType(TodoItemWidget),
+        matching: find.byKey(const ValueKey('updateTodoItem')),
+      );
       await tester.ensureVisible(checkbox);
       await tester.dragUntilVisible(
         checkbox,
@@ -74,8 +92,14 @@ main() {
       await tester.tap(find.text('Delete'));
       await tester.pumpAndSettle();
       expect(find.text('Are you sure to delete this note?'), findsExactly(1));
-      final deleteMenuItem = find.descendant(of: find.byType(RoundContainer), matching: find.text('Delete'));
-      final cancelMenuItem = find.descendant(of: find.byType(RoundContainer), matching: find.text('Cancel'));
+      final deleteMenuItem = find.descendant(
+        of: find.byType(RoundContainer),
+        matching: find.text('Delete'),
+      );
+      final cancelMenuItem = find.descendant(
+        of: find.byType(RoundContainer),
+        matching: find.text('Cancel'),
+      );
       expect(deleteMenuItem, findsExactly(1));
       expect(cancelMenuItem, findsExactly(1));
       await tester.ensureVisible(deleteMenuItem);

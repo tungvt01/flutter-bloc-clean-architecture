@@ -37,12 +37,21 @@ main() async {
 
   group('getAll()', () {
     test('get all todos list', () async {
-      final List<TodoModel> totoList = [TodoModel(id: 1, title: '1', createdDate: DateTime.now(), isFinished: true, description: '')];
+      final List<TodoModel> totoList = [
+        TodoModel(
+          id: 1,
+          title: '1',
+          createdDate: DateTime.now(),
+          isFinished: true,
+          description: '',
+        ),
+      ];
       final builder = MockQueryBuilder();
       final query = MockQuery();
 
       when(box.query).thenReturn(builder);
-      when(() => builder.order(TodoModel_.createdDate, flags: Order.descending)).thenReturn(builder);
+      when(() => builder.order(TodoModel_.createdDate, flags: Order.descending))
+          .thenReturn(builder);
       when(builder.build).thenReturn(query);
       when(query.find).thenReturn(totoList);
 
@@ -51,7 +60,9 @@ main() async {
       expect(result, totoList);
       verify(store.box<TodoModel>).called(1);
       verify(box.query).called(1);
-      verify(() => builder.order(TodoModel_.createdDate, flags: Order.descending)).called(1);
+      verify(
+        () => builder.order(TodoModel_.createdDate, flags: Order.descending),
+      ).called(1);
       verify(builder.build).called(1);
       verify(query.find).called(1);
       verify(query.close).called(1);
@@ -72,7 +83,13 @@ main() async {
   });
 
   group('insertOrUpdate()', () {
-    final insertTodo = TodoModel(id: 1, title: 'title', description: 'description', createdDate: DateTime.now(), isFinished: true);
+    final insertTodo = TodoModel(
+      id: 1,
+      title: 'title',
+      description: 'description',
+      createdDate: DateTime.now(),
+      isFinished: true,
+    );
 
     test('should insert or update successfully', () async {
       when(() => box.put(insertTodo)).thenAnswer((_) => 1);
@@ -83,7 +100,8 @@ main() async {
     });
 
     test('should throw error', () async {
-      when(() => box.put(insertTodo)).thenThrow(IOException(errorMessage: ioException));
+      when(() => box.put(insertTodo))
+          .thenThrow(IOException(errorMessage: ioException));
       try {
         await totoDAO.insertOrUpdate(data: insertTodo);
       } catch (ex) {
@@ -104,7 +122,8 @@ main() async {
     });
 
     test('should throw error', () async {
-      when(() => box.remove(removeId)).thenThrow(IOException(errorMessage: ioException));
+      when(() => box.remove(removeId))
+          .thenThrow(IOException(errorMessage: ioException));
       try {
         await totoDAO.remove(id: removeId);
       } catch (ex) {

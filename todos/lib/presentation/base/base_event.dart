@@ -47,4 +47,3 @@ class AppGainForegroundEvent extends BaseEvent {
 class RefreshEvent extends BaseEvent {}
 
 class LoadMoreEvent extends BaseEvent {}
-

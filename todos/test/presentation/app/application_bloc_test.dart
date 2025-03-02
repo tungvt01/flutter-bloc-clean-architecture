@@ -6,7 +6,10 @@ import 'package:todos/presentation/base/index.dart';
 main() {
   late ApplicationBloc applicationBloc;
   final initialState = ApplicationState(tag: AppLaunchTag.splash);
-  final expectedState = initialState.copyWith(status: LoadingStatus.finish, tag: AppLaunchTag.main);
+  final expectedState = initialState.copyWith(
+    status: LoadingStatus.finish,
+    tag: AppLaunchTag.main,
+  );
   setUp(() {
     applicationBloc = ApplicationBloc();
   });

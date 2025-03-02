@@ -22,8 +22,8 @@ class SolidButton extends StatelessWidget {
     this.onPressed,
     this.borderRadius = 10,
     this.borderSide,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -33,14 +33,15 @@ class SolidButton extends StatelessWidget {
         }
       },
       style: ButtonStyle(
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius),
             //side: borderSide ?? const BorderSide(width: 1)
           ),
         ),
-        backgroundColor: MaterialStateProperty.all<Color>(
-            backgroundColor ?? AppColors.primaryColor),
+        backgroundColor: WidgetStateProperty.all<Color>(
+          backgroundColor ?? AppColors.primaryColor,
+        ),
       ),
       child: SizedBox(
         height: height,

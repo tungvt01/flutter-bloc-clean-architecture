@@ -50,56 +50,58 @@ main() async {
 
   List<Tuple2<dynamic, Failure>> testCases = [
     Tuple2(
-        RemoteException(
-          errorCode: 'RemoteException',
-          errorMessage: 'errorMessage',
-          httpStatusCode: 1000,
-        ),
-        RemoteFailure(
-            errorCode: 'RemoteException',
-            msg: 'errorMessage',
-            code: 1000
-        )
+      RemoteException(
+        errorCode: 'RemoteException',
+        errorMessage: 'errorMessage',
+        httpStatusCode: 1000,
+      ),
+      RemoteFailure(
+        errorCode: 'RemoteException',
+        msg: 'errorMessage',
+        code: 1000,
+      ),
     ),
     Tuple2(
-        CacheException(
-          errorMessage: 'CacheException',
-        ),
-        LocalFailure(
-          msg: 'CacheException',
-        )
+      CacheException(
+        errorMessage: 'CacheException',
+      ),
+      LocalFailure(
+        msg: 'CacheException',
+      ),
     ),
     Tuple2(
-        PlatformException(
-          message: 'PlatformException', code: '11',
-        ),
-        LocalFailure(
-          msg: 'PlatformException',
-        )
+      PlatformException(
+        message: 'PlatformException',
+        code: '11',
+      ),
+      LocalFailure(
+        msg: 'PlatformException',
+      ),
     ),
     Tuple2(
-        IOException(
-          errorMessage: 'IOException', errorCode: '11',
-        ),
-        LocalFailure(
-          msg: 'IOException',
-          errorCode: '11',
-        )
+      IOException(
+        errorMessage: 'IOException',
+        errorCode: '11',
+      ),
+      LocalFailure(
+        msg: 'IOException',
+        errorCode: '11',
+      ),
     ),
     Tuple2(
-        Exception(
-            "ExceptionMsg"
-        ),
-        UnknownFailure(
-          msg: 'Exception: ExceptionMsg',
-        )
+      Exception(
+        'ExceptionMsg',
+      ),
+      UnknownFailure(
+        msg: 'Exception: ExceptionMsg',
+      ),
     ),
     Tuple2(
-        Error(),
-        UnknownFailure(
-          msg: Error().toString(),
-        )
-    )
+      Error(),
+      UnknownFailure(
+        msg: Error().toString(),
+      ),
+    ),
   ];
 
   testCases.asMap().forEach((index, testCase) {
@@ -109,13 +111,11 @@ main() async {
       final result = await baseUseCase.execute(1);
 
       expect(result.isLeft(), true);
-      result.fold(
-              (failure){
-            expect(failure, testCase.tail);
-          },
-              (value) {
-            expect(value, null);
-          });
+      result.fold((failure) {
+        expect(failure, testCase.tail);
+      }, (value) {
+        expect(value, null);
+      });
       verify(() => mockService.run()).called(1);
       verifyNoMoreInteractions(mockService);
     });

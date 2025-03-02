@@ -17,6 +17,7 @@ class MainState extends BaseState with EquatableMixin {
   List<Object?> get props => [loadingStatus, failure];
 }
 
+//ignore: must_be_immutable
 class AddNewTodoSuccessState extends MainState {
   TodoModel todo;
 

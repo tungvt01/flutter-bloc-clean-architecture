@@ -31,7 +31,8 @@ void main() async {
 
   test('Should delete todo successfully', () async {
     const success = true;
-    when(todoRepository.remove(id: deletingTodo.id)).thenAnswer((_) => Future<bool>.value(success));
+    when(todoRepository.remove(id: deletingTodo.id))
+        .thenAnswer((_) => Future<bool>.value(success));
 
     final result = await updateTodoUseCase.removeTodo(todoModel: deletingTodo);
 
