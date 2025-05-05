@@ -2,10 +2,10 @@ PODS:
   - Flutter (1.0.0)
   - integration_test (0.0.1):
     - Flutter
-  - ObjectBox (2.0.0)
+  - ObjectBox (4.2.0)
   - objectbox_flutter_libs (0.0.1):
     - Flutter
-    - ObjectBox (= 2.0.0)
+    - ObjectBox (= 4.2.0)
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -38,12 +38,12 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  integration_test: ce0a3ffa1de96d1a89ca0ac26fca7ea18a749ef4
-  ObjectBox: f5319bd9ad2ea960796eff7227e86471867e9ef0
-  objectbox_flutter_libs: c7748f6c6fda47d22f15c8062fb8208063fd948a
-  path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
-  shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
+  integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
+  ObjectBox: 2b4c925852ea99f070492f21328bf4002165cbd9
+  objectbox_flutter_libs: 50402e45f47f385d47fc041aba4607b89c4a3a1f
+  path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
+  shared_preferences_foundation: 9e1978ff2562383bd5676f64ec4e9aa8fa06a6f7
 
-PODFILE CHECKSUM: c4c93c5f6502fe2754f48404d3594bf779584011
+PODFILE CHECKSUM: 5a367937f10bf0c459576e5e472a1159ee029c13
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2
